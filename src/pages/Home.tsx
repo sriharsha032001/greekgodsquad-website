@@ -35,27 +35,29 @@ export default function Home() {
       return;
     }
 
-    const message = `Hi! I'm interested in joining The Greek God Squad.%0A
-Name: ${name}%0A
-Date of Birth: ${dob}%0A
-Age: ${age}%0A
-Phone: ${phone}%0A
-Email: ${email}%0A
-Height: ${height}%0A
-Weight: ${weight}`;
+    const message = encodeURIComponent(
+      `Hi! I'm interested in joining The Greek God Squad.\n\n` +
+      `Name: ${name}\n` +
+      `Date of Birth: ${dob}\n` +
+      `Age: ${age}\n` +
+      `Phone: ${phone}\n` +
+      `Email: ${email}\n` +
+      `Height: ${height}\n` +
+      `Weight: ${weight}`
+    );
 
     const phoneNumber = '919160427763';
 
     setTimeout(() => {
       setLoading(false);
-      window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+      window.location.href = `https://wa.me/${phoneNumber}?text=${message}`;
     }, 1500);
   };
 
   return (
     <div
       className="min-h-screen bg-cover bg-center text-white font-sans"
-      style={{ backgroundImage: "url('/welcome-bg.JPG')" }}
+      style={{ backgroundImage: "url('./welcome-bg.JPG')" }}
     >
       <DumbbellLoader show={loading} />
 
@@ -70,7 +72,7 @@ Weight: ${weight}`;
             Achievements
           </button>
           <button onClick={() => handleClick('/clients')} className="hover:underline hover:text-gray-300 transition text-sm">
-            Clients
+            Transformations
           </button>
           <a
             href="https://apps.apple.com/app/thegreekgodsquad/id6740698559"
@@ -124,7 +126,7 @@ Weight: ${weight}`;
               {/* Coach 1 */}
               <div className="flex flex-col items-center text-center bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
                 <img
-                  src="/coach1.jpeg"
+                  src="./coach1.jpeg"
                   alt="Coach 1"
                   className="w-24 h-24 rounded-full object-cover mb-4 border-4 border-white"
                 />
@@ -146,7 +148,7 @@ Weight: ${weight}`;
               {/* Coach 2 */}
               <div className="flex flex-col items-center text-center bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
                 <img
-                  src="/coach2.jpeg"
+                  src="./coach2.jpeg"
                   alt="Coach 2"
                   className="w-24 h-24 rounded-full object-cover mb-4 border-4 border-white"
                 />
@@ -168,12 +170,12 @@ Weight: ${weight}`;
           </div>
         </div>
 
-        {/* Right: Glassmorphic Form */}
-        <div className="backdrop-blur-lg bg-white/10 border border-white/20 p-8 rounded-xl shadow-2xl text-white self-start">
+        {/* Right: Join Form */}
+        <div className="backdrop-blur-lg bg-white/10 border border-white/20 p-8 rounded-xl shadow-2xl text-white self-start w-full">
           <h3 className="text-xl font-bold mb-6 text-center">Join the Squad</h3>
           <form className="space-y-4" onSubmit={handleFormSubmit}>
             <input name="name" type="text" required placeholder="Name" className="w-full bg-white/20 border border-white/30 rounded-md p-2 text-sm placeholder-white" />
-            <input name="dob" type="date" required placeholder="Date of Birth" className="w-full bg-white/20 border border-white/30 rounded-md p-2 text-sm placeholder-white" />
+            <input name="dob" type="date" required className="w-full bg-white/20 border border-white/30 rounded-md p-2 text-sm text-white" />
             <input name="age" type="number" required placeholder="Age" className="w-full bg-white/20 border border-white/30 rounded-md p-2 text-sm placeholder-white" />
             <input name="phone" type="tel" required placeholder="Phone Number" className="w-full bg-white/20 border border-white/30 rounded-md p-2 text-sm placeholder-white" />
             <input name="email" type="email" required placeholder="Email Address" className="w-full bg-white/20 border border-white/30 rounded-md p-2 text-sm placeholder-white" />

@@ -7,12 +7,12 @@ const Clients = () => {
   const [showFullDescription, setShowFullDescription] = useState(false);
 
   const clientPhotos = [
-    "/client1.JPG",
-    "/client2.JPG",
-    "/client3.JPG",
-    "/client4.JPG",
-    "/client5.JPG",
-    "/client6.JPG",
+    "./client1.JPG",
+    "./client2.JPG",
+    "./client3.JPG",
+    "./client4.JPG",
+    "./client5.JPG",
+    "./client6.JPG",
   ];
 
   const description = (
@@ -69,7 +69,7 @@ const Clients = () => {
               <img
                 src={photo}
                 alt={`Client ${index + 1}`}
-                className="w-full h-80 object-cover"
+                className="w-full h-64 md:h-80 object-cover"
               />
             </div>
           ))}
