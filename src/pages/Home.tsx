@@ -1,8 +1,8 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import DumbbellLoader from '../components/DumbbellLoader';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
@@ -73,6 +73,9 @@ export default function Home() {
           </button>
           <button onClick={() => handleClick('/clients')} className="hover:underline hover:text-gray-300 transition text-sm">
             Transformations
+          </button>
+          <button onClick={() => handleClick('/ebooks')} className="hover:underline hover:text-gray-300 transition text-sm">
+            Explore Ebooks
           </button>
           <a
             href="https://apps.apple.com/app/thegreekgodsquad/id6740698559"
@@ -181,12 +184,24 @@ export default function Home() {
             <input name="email" type="email" required placeholder="Email Address" className="w-full bg-white/20 border border-white/30 rounded-md p-2 text-sm placeholder-white" />
             <input name="height" type="text" required placeholder="Height (e.g. 5'8 or 172 cm)" className="w-full bg-white/20 border border-white/30 rounded-md p-2 text-sm placeholder-white" />
             <input name="weight" type="text" required placeholder="Weight (e.g. 70 kg)" className="w-full bg-white/20 border border-white/30 rounded-md p-2 text-sm placeholder-white" />
-            <button type="submit" className="w-full mt-4 bg-white text-black py-2 rounded-md hover:bg-gray-200 transition text-sm font-medium">
-              Submit
+            <button type="submit" className="w-full bg-blue-500 py-2 rounded-md text-white hover:bg-blue-400 transition">
+              Join Now
             </button>
           </form>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="text-center py-6 text-gray-400">
+        <p>&copy; 2025 The Greek God Squad. All rights reserved.</p>
+        <div className="mt-4 flex justify-center gap-6 text-sm">
+          <Link to="/pricingpolicy" className="hover:text-white">Pricing Policy</Link>
+          <Link to="/shipping" className="hover:text-white">Shipping Policy</Link>
+          <Link to="/termsandconditions" className="hover:text-white">Terms and Conditions</Link>
+          <Link to="/privacypolicy" className="hover:text-white">Privacy Policy</Link>
+          <Link to="/Refund" className="hover:text-white">Cancellation/Refund Policy</Link>
+        </div>
+      </footer>
     </div>
   );
 }
