@@ -9,6 +9,8 @@ declare global {
   }
 }
 
+const API_BASE_URL = "https://greekgodssquad-website-backend-production.up.railway.app";
+
 const EbooksPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -18,7 +20,7 @@ const EbooksPage = () => {
 
     try {
       // Step 1: Create order
-      const orderResponse = await fetch("http://localhost:5000/api/payment/create-order", {
+      const orderResponse = await fetch(`${API_BASE_URL}/api/payment/create-order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount: 5900 }),
@@ -42,7 +44,7 @@ const EbooksPage = () => {
         handler: async function (response: any) {
           try {
             // Step 3: Verify payment
-            const verifyResponse = await fetch("http://localhost:5000/api/payment/verify-payment", {
+            const verifyResponse = await fetch(`${API_BASE_URL}/api/payment/verify-payment`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
