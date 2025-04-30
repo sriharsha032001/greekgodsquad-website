@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
-// Declare Razorpay globally
 declare global {
   interface Window {
     Razorpay: any;
   }
 }
 
-const API_BASE_URL = "https://greekgodssquad-website-backend-production.up.railway.app";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "") || "";
 
 const EbooksPage = () => {
   const navigate = useNavigate();
@@ -19,20 +18,16 @@ const EbooksPage = () => {
     setLoading(true);
 
     try {
-      // Step 1: Create order
       const orderResponse = await fetch(`${API_BASE_URL}/api/payment/create-order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount: 5900 }),
       });
 
-      if (!orderResponse.ok) {
-        throw new Error("Failed to create order.");
-      }
+      if (!orderResponse.ok) throw new Error("Failed to create order.");
 
       const { id: orderId, key: razorpayKey } = await orderResponse.json();
 
-      // Step 2: Razorpay options
       const options = {
         key: razorpayKey,
         amount: 5900,
@@ -43,7 +38,6 @@ const EbooksPage = () => {
         order_id: orderId,
         handler: async function (response: any) {
           try {
-            // Step 3: Verify payment
             const verifyResponse = await fetch(`${API_BASE_URL}/api/payment/verify-payment`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -54,9 +48,7 @@ const EbooksPage = () => {
               }),
             });
 
-            if (!verifyResponse.ok) {
-              throw new Error("Payment verification failed.");
-            }
+            if (!verifyResponse.ok) throw new Error("Payment verification failed.");
 
             const verifyData = await verifyResponse.json();
 
@@ -75,9 +67,7 @@ const EbooksPage = () => {
             setLoading(false);
           }
         },
-        theme: {
-          color: "#EF4444",
-        },
+        theme: { color: "#EF4444" },
         modal: {
           ondismiss: () => {
             toast("Transaction cancelled.", { icon: "⚡" });
@@ -87,7 +77,6 @@ const EbooksPage = () => {
       };
 
       const razorpay = new window.Razorpay(options);
-
       razorpay.on("payment.failed", function (response: any) {
         console.error("Payment Failed:", response.error);
         toast.error("Payment failed. Please try again.");
@@ -127,7 +116,7 @@ const EbooksPage = () => {
           <button
             onClick={handlePayment}
             disabled={loading}
-            className={`${
+            className={`$ {
               loading ? "bg-gray-400" : "bg-gradient-to-r from-red-500 to-orange-600"
             } text-white py-3 px-6 rounded-lg shadow-md hover:from-red-400 hover:to-orange-500 transition-all duration-300 transform hover:scale-105`}
           >
