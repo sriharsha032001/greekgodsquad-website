@@ -1,62 +1,80 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import Confetti from 'react-confetti';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
-const Success = ({ downloadUrl }) => {
-  const [timeLeft, setTimeLeft] = useState(120); // 2 minutes in seconds
-  const [isExpired, setIsExpired] = useState(false);
+const Success = () => {
+  const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
+  const [isFading, setIsFading] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // Countdown Timer
+  const { downloadUrl } = location.state || {};
+
   useEffect(() => {
-    if (timeLeft === 0) {
-      setIsExpired(true);
-      return;
-    }
+    toast.success('Payment Successful! 🎉', {
+      position: "top-center",
+      duration: 3000,
+    });
 
-    const timer = setInterval(() => {
-      setTimeLeft((prevTime) => prevTime - 1);
-    }, 1000);
+    const handleResize = () => {
+      setDimensions({ width: window.innerWidth, height: window.innerHeight });
+    };
 
-    return () => clearInterval(timer); // Cleanup on component unmount
-  }, [timeLeft]);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleDownload = () => {
-    if (!downloadUrl || isExpired) return;
+    if (downloadUrl) {
+      // Trigger download
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.setAttribute('download', 'ebook.pdf');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
 
-    // Trigger the download action (you can customize this logic)
-    window.location.href = downloadUrl;
+      // Start fade-out effect
+      setIsFading(true);
+
+      // Redirect after 2 seconds
+      setTimeout(() => {
+        navigate('/', { replace: true });
+      }, 2000);
+    }
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-white text-black p-4">
-      <div className="max-w-lg w-full text-center">
-        <h1 className="text-3xl font-bold mb-4">Success!</h1>
-        <p className="text-lg mb-4">
-          Your purchase is confirmed. You can now download your ebook.
-        </p>
-        
-        {downloadUrl ? (
-          <>
-            <p className="text-sm text-yellow-400 mb-4">
-              Please download the PDF within 2 minutes as the link won't be active after that.
-            </p>
-            <p className="text-sm text-gray-500 mb-4">
-              Time remaining: {timeLeft} seconds
-            </p>
-            <button
-              className="px-6 py-3 bg-green-500 text-white rounded-full hover:bg-green-600 transition mb-4"
-              onClick={handleDownload}
-              disabled={isExpired}
-            >
-              {isExpired ? 'Link Expired' : 'Download Your Ebook'}
-            </button>
-          </>
-        ) : (
-          <p className="text-gray-400">Generating download link...</p>
-        )}
+    <div className={`flex flex-col justify-center items-center h-screen bg-black transition-opacity duration-1000 ${isFading ? 'opacity-0' : 'opacity-100'}`}>
+      <Confetti width={dimensions.width} height={dimensions.height} />
 
-        {isExpired && (
-          <p className="text-sm text-red-500 mt-4">Sorry, the link has expired. Please try again.</p>
-        )}
-      </div>
+      <h1 className="text-4xl font-bold text-green-400 mb-4 animate-pulse drop-shadow-glow">
+        Payment Successful!
+      </h1>
+
+      <p className="text-lg text-gray-300 mb-6 text-center px-6">
+        Thank you for your payment! Your download is ready.
+        The download link will be active for only 2mins.
+      </p>
+
+      {downloadUrl ? (
+        <button
+          className="px-6 py-3 bg-green-500 text-white rounded-full hover:bg-green-600 transition mb-4"
+          onClick={handleDownload}
+        >
+        Download Your Ebook
+        </button>
+      ) : (
+        <p className="text-gray-400">Generating download link...</p>
+      )}
+
+      <button
+        className="text-sm text-white underline hover:text-gray-300"
+        onClick={() => navigate('/ebooks', { replace: true })}
+      >
+        Go to Ebooks Library
+      </button>
     </div>
   );
 };
