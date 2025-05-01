@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import DumbbellLoader from '../components/DumbbellLoader';
-import { Link } from 'react-router-dom';
-import LazyLoadingContent from '../components/LazyLoadContent'; // Import LazyLoadingContent
+import LazyLoadingContent from '../components/LazyLoadContent';
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
@@ -56,25 +55,36 @@ export default function Home() {
   };
 
   return (
-    <div
-      className="min-h-screen bg-cover bg-center text-white font-sans"
-      style={{ backgroundImage: "url('./welcome-bg.JPG')" }}
+    <motion.div
+      className="min-h-screen text-black font-sans px-4 sm:px-6 relative overflow-hidden"
+      // Animated, lightweight gradient background:
+      style={{
+        backgroundImage: 'linear-gradient(-45deg, #ffffff, #f3f4f6, #e5e7eb, #ffffff)',
+        backgroundSize: '400% 400%',
+      }}
+      initial={{ backgroundPosition: '0% 50%' }}
+      animate={{ backgroundPosition: '100% 50%' }}
+      transition={{
+        duration: 20,
+        repeat: Infinity,
+        ease: "linear"
+      }}
     >
       <DumbbellLoader show={loading} />
 
-      {/* Top Bar */}
-      <div className="bg-black bg-opacity-60 backdrop-blur-md text-white py-4 px-6 shadow-md flex flex-col md:flex-row md:justify-between md:items-center gap-2 md:gap-0">
-        <h1 className="text-2xl font-extrabold tracking-widest uppercase text-center md:text-left">
+      {/* Navbar */}
+      <div className="py-4 px-4 sm:px-6 bg-black text-white shadow-md flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sticky top-0 z-10">
+        <h1 className="text-2xl font-extrabold tracking-widest uppercase text-center sm:text-left">
           The Greek God Squad
         </h1>
-        <div className="flex items-center justify-center md:justify-end gap-4 flex-wrap">
-          <button onClick={() => handleClick('/achievements')} className="hover:text-blue-400 transition text-sm font-semibold">
+        <div className="flex items-center justify-center sm:justify-end gap-3 flex-wrap">
+          <button onClick={() => handleClick('/achievements')} className="hover:text-gray-400 transition text-sm font-semibold">
             Achievements
           </button>
-          <button onClick={() => handleClick('/clients')} className="hover:text-blue-400 transition text-sm font-semibold">
+          <button onClick={() => handleClick('/clients')} className="hover:text-gray-400 transition text-sm font-semibold">
             Transformations
           </button>
-          <button onClick={() => handleClick('/ebooks')} className="hover:text-blue-400 transition text-sm font-semibold">
+          <button onClick={() => handleClick('/ebooks')} className="hover:text-gray-400 transition text-sm font-semibold">
             Explore Ebooks
           </button>
           <a
@@ -96,115 +106,148 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Welcome Heading */}
-      <div className="flex items-center justify-center py-16 px-4">
+      {/* Hero Section */}
+      <div className="flex items-center justify-center py-12 sm:py-16 px-2 bg-gradient-to-br from-gray-100 via-white to-gray-100">
         <motion.h1
           initial={{ opacity: 0, y: -40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="text-4xl sm:text-5xl md:text-6xl font-bold text-center text-white drop-shadow"
+          className="text-3xl sm:text-5xl md:text-6xl font-bold text-center drop-shadow px-2"
         >
           WELCOME TO THE GREEK GOD SQUAD
         </motion.h1>
       </div>
 
-      {/* Main Content */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 px-6 pb-24 max-w-7xl mx-auto">
-        {/* Left: About + Coaches */}
+      {/* Main Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 pb-20 max-w-6xl mx-auto">
+        {/* Left Section */}
         <LazyLoadingContent>
-          <div>
-            {/* About */}
-            <div className="mb-10 bg-black/60 p-6 rounded-xl">
-              <h2 className="text-2xl font-semibold mb-4 text-white">About Us</h2>
-              <p className="text-gray-300 leading-relaxed text-base">
+          <div className="space-y-10">
+            {/* About Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-lg transition"
+            >
+              <h2 className="text-2xl font-bold mb-4">About Us</h2>
+              <p className="text-gray-700 text-base font-bold">
                 The Greek God Squad is more than a fitness program — it's a transformation
                 movement. We're focused on building stronger bodies and sharper minds through
                 customized training, nutrition, and community-driven motivation.
               </p>
-            </div>
+            </motion.div>
+
+            {/* Why Join */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="bg-white border border-gray-200 p-6 rounded-xl shadow-md hover:shadow-lg transition"
+            >
+              <h2 className="text-2xl font-bold mb-4">Why Join Us?</h2>
+              <ul className="list-disc list-inside space-y-2 text-gray-800 font-bold">
+                <li>Customized training programs tailored to your body</li>
+                <li>Expert diet plans crafted by our coaches</li>
+                <li>Regular progress tracking & feedback</li>
+                <li>Motivational community support</li>
+                <li>Flexible access via our mobile app</li>
+              </ul>
+            </motion.div>
 
             {/* Coaches */}
-            <div className="bg-black/60 p-6 rounded-xl">
-              <h2 className="text-2xl font-semibold mb-6 text-white">Meet Our Coaches</h2>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-lg transition"
+            >
+              <h2 className="text-2xl font-bold mb-6">Meet Our Coaches</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {/* Coach 1 */}
-                <div className="flex flex-col items-center text-center bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-                  <img
-                    src="./coach1.jpeg"
-                    alt="Coach 1"
-                    className="w-24 h-24 rounded-full object-cover mb-4 border-4 border-white"
-                  />
-                  <h4 className="text-lg font-bold text-white">Chakri - The GreekGod</h4>
-                  <p className="text-sm text-gray-300">Fitness Coach</p>
-                  <p className="mt-2 text-gray-400 text-sm">
-                    Specializes in strength training and body transformation with 5+ years of experience.
-                  </p>
-                  <a
-                    href="https://www.instagram.com/the_greek_.god_?igsh=MTJmdGpuZXdzdDR5dw=="
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-3 text-blue-400 hover:underline text-sm"
+                {[{
+                    name: 'Chakri - The GreekGod',
+                    title: 'Fitness Coach',
+                    description: 'Specializes in strength training and body transformation with 5+ years of experience.',
+                    image: './coach1.jpeg',
+                    link: 'https://www.instagram.com/the_greek_.god_?igsh=MTJmdGpuZXdzdDR5dw==',
+                    handle: '@the_greek_god'
+                  },
+                  {
+                    name: 'Deva Kiran',
+                    title: 'Fitness Coach',
+                    description: 'Specializes in strength training and body transformation with 3+ years of experience.',
+                    image: './coach2.jpeg',
+                    link: 'https://www.instagram.com/deva.inx?igsh=YjJ1amRieWh3MTJq',
+                    handle: '@deva.inx'
+                  }
+                ].map((coach, idx) => (
+                  <motion.div
+                    key={idx}
+                    className="flex flex-col items-center text-center bg-white rounded-xl p-6 border border-gray-200 shadow-sm hover:shadow-lg transition"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: idx * 0.2 }}
                   >
-                    @the_greek_god
-                  </a>
-                </div>
-
-                {/* Coach 2 */}
-                <div className="flex flex-col items-center text-center bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-                  <img
-                    src="./coach2.jpeg"
-                    alt="Coach 2"
-                    className="w-24 h-24 rounded-full object-cover mb-4 border-4 border-white"
-                  />
-                  <h4 className="text-lg font-bold text-white">Deva Kiran</h4>
-                  <p className="text-sm text-gray-300">Fitness Coach</p>
-                  <p className="mt-2 text-gray-400 text-sm">
-                    Specializes in strength training and body transformation with 3+ years of experience.
-                  </p>
-                  <a
-                    href="https://www.instagram.com/deva.inx?igsh=YjJ1amRieWh3MTJq"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-3 text-blue-400 hover:underline text-sm"
-                  >
-                    @deva.inx
-                  </a>
-                </div>
+                    <img src={coach.image} alt={coach.name} className="w-24 h-24 rounded-full object-cover mb-4 border-4 border-black" />
+                    <h4 className="text-lg font-bold">{coach.name}</h4>
+                    <p className="text-sm text-gray-600 font-bold">{coach.title}</p>
+                    <p className="mt-2 text-gray-600 text-sm font-bold">{coach.description}</p>
+                    <a href={coach.link} target="_blank" rel="noopener noreferrer" className="mt-3 text-blue-600 hover:underline text-sm font-bold">
+                      {coach.handle}
+                    </a>
+                  </motion.div>
+                ))}
               </div>
-            </div>
+            </motion.div>
           </div>
         </LazyLoadingContent>
 
-        {/* Right: Join Form */}
-        <div className="backdrop-blur-lg bg-white/10 border border-white/20 p-8 rounded-xl shadow-2xl text-white self-start w-full">
+        {/* Form Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="w-full md:max-w-md mx-auto bg-gray-100 border border-gray-200 p-6 rounded-xl shadow-md self-start hover:shadow-lg transition"
+        >
           <h3 className="text-xl font-bold mb-6 text-center">Join the Squad</h3>
           <form className="space-y-4" onSubmit={handleFormSubmit}>
-            <input name="name" type="text" required placeholder="Name" className="w-full bg-white/20 border border-white/30 rounded-md p-2 text-sm placeholder-white" />
-            <input name="dob" type="text" required placeholder="Date of Birth (DD-MM-YYYY)" pattern="\d{2}-\d{2}-\d{4}" className="w-full bg-white/20 border border-white/30 rounded-md p-2 text-sm placeholder-white" />
-            <input name="age" type="number" required placeholder="Age" className="w-full bg-white/20 border border-white/30 rounded-md p-2 text-sm placeholder-white" />
-            <input name="phone" type="tel" required placeholder="Phone Number" className="w-full bg-white/20 border border-white/30 rounded-md p-2 text-sm placeholder-white" />
-            <input name="email" type="email" required placeholder="Email Address" className="w-full bg-white/20 border border-white/30 rounded-md p-2 text-sm placeholder-white" />
-            <input name="height" type="text" required placeholder="Height (e.g. 5'8 or 172 cm)" className="w-full bg-white/20 border border-white/30 rounded-md p-2 text-sm placeholder-white" />
-            <input name="weight" type="text" required placeholder="Weight (e.g. 70 kg)" className="w-full bg-white/20 border border-white/30 rounded-md p-2 text-sm placeholder-white" />
-            <button type="submit" className="w-full bg-blue-500 py-2 rounded-md text-white hover:bg-blue-400 transition">
+            {['name', 'dob', 'age', 'phone', 'email', 'height', 'weight'].map((field, idx) => (
+              <input
+                key={idx}
+                name={field}
+                type={field === 'age' ? 'number' : field === 'email' ? 'email' : 'text'}
+                required
+                placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+                className="w-full bg-white border border-gray-300 rounded-md p-3 text-base font-bold"
+              />
+            ))}
+            <button type="submit" className="w-full bg-blue-600 py-3 rounded-md text-white hover:bg-blue-500 transition font-bold text-base">
               Join Now
             </button>
           </form>
-        </div>
+
+          {/* Testimonial Section */}
+          <div className="mt-8">
+            <h4 className="text-lg font-bold text-center mb-2">What Our Members Say</h4>
+            <p className="text-sm text-gray-700 text-center italic font-semibold">
+              “Joining the Greek God Squad was the best decision I ever made. I feel stronger, more disciplined, and part of an amazing community!” – Abhiram.
+            </p>
+          </div>
+        </motion.div>
       </div>
 
       {/* Footer */}
-      <footer className="text-center py-6 text-gray-400 px-4">
+      <footer className="text-center py-6 text-gray-600 px-4 text-sm font-bold">
         <p>&copy; 2025 The Greek God Squad. All rights reserved.</p>
-        <div className="mt-4 flex flex-col sm:flex-row sm:flex-wrap sm:justify-center gap-2 sm:gap-4 text-sm">
-          <Link to="/pricingpolicy" className="hover:text-white">Pricing Policy</Link>
-          <Link to="/shipping" className="hover:text-white">Shipping Policy</Link>
-          <Link to="/termsandconditions" className="hover:text-white">Terms & Conditions</Link>
-          <Link to="/privacypolicy" className="hover:text-white">Privacy Policy</Link>
-          <Link to="/Refund" className="hover:text-white">Cancellation/Refund</Link>
-          <Link to="/contactus" className="hover:text-white">Contact Us</Link>
+        <div className="mt-4 flex flex-col sm:flex-row sm:flex-wrap sm:justify-center gap-3">
+          <Link to="/pricingpolicy" className="hover:text-black font-bold">Pricing Policy</Link>
+          <Link to="/shipping" className="hover:text-black font-bold">Shipping Policy</Link>
+          <Link to="/termsandconditions" className="hover:text-black font-bold">Terms & Conditions</Link>
+          <Link to="/privacypolicy" className="hover:text-black font-bold">Privacy Policy</Link>
+          <Link to="/refund" className="hover:text-black font-bold">Cancellation/Refund</Link>
+          <Link to="/contactus" className="hover:text-black font-bold">Contact Us</Link>
         </div>
       </footer>
-    </div>
+    </motion.div>
   );
 }

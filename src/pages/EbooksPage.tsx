@@ -92,7 +92,7 @@ const EbooksPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white py-12 px-6 relative">
+    <div className="min-h-screen bg-black text-white py-12 px-4 sm:px-6 relative">
       <button
         onClick={() => navigate(-1)}
         className="absolute top-6 left-6 bg-white/10 border border-white/20 text-white py-2 px-4 rounded-lg hover:bg-white/20 transition"
@@ -102,23 +102,23 @@ const EbooksPage = () => {
 
       <h1 className="text-4xl font-bold text-center mb-10">EBooks Library</h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        <div className="bg-white/10 border border-white/20 rounded-xl p-6 shadow-xl backdrop-blur-sm transition hover:scale-105 hover:shadow-2xl duration-300">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
+        <div className="bg-white/10 border border-white/20 rounded-xl p-4 sm:p-5 shadow-lg backdrop-blur-sm transition hover:scale-105 hover:shadow-2xl duration-300">
           <img
             src="./ebook1.jpeg"
             alt="Ebook Cover"
             className="w-full aspect-[9/10] object-cover rounded-lg mb-4"
           />
-          <h3 className="text-xl font-semibold mb-2">Greek God chest workout</h3>
-          <p className="text-gray-300 text-sm mb-4">
+          <h3 className="text-lg sm:text-xl font-semibold mb-2">Greek God chest workout</h3>
+          <p className="text-gray-300 text-xs sm:text-sm mb-4">
             A complete guide of four week greekgod chest workout. Progressive overload to peak chest development.
           </p>
           <button
             onClick={handlePayment}
             disabled={loading}
-            className={`$ {
+            className={`${
               loading ? "bg-gray-400" : "bg-gradient-to-r from-red-500 to-orange-600"
-            } text-white py-3 px-6 rounded-lg shadow-md hover:from-red-400 hover:to-orange-500 transition-all duration-300 transform hover:scale-105`}
+            } text-white py-2 px-4 rounded-lg shadow-md hover:from-red-400 hover:to-orange-500 transition-all duration-300 transform hover:scale-105 w-full sm:w-auto`}
           >
             {loading ? "Processing..." : "👑 Buy Now ₹59"}
           </button>

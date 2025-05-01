@@ -1,25 +1,12 @@
 // src/pages/Shipping.jsx
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+
 
 const Shipping = () => {
-  const navigate = useNavigate();
-
-  const handleBackClick = () => {
-    navigate(-1); // Goes back to the previous page
-  };
-
   return (
     <div className="min-h-screen p-8 bg-black text-white">
       <div className="max-w-3xl mx-auto bg-black/80 rounded-3xl p-10 shadow-2xl transform transition-all hover:scale-105 hover:shadow-xl">
-        <button
-          onClick={handleBackClick}
-          className="text-lg text-gray-300 mb-4 hover:text-white transition-all"
-        >
-          &#8592; Back
-        </button>
-
         <h1 className="text-4xl font-extrabold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">
           Shipping Policy
         </h1>
