@@ -2,3 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Star Background Animation */
+.stars, .stars2, .stars3 {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: transparent url('https://raw.githubusercontent.com/VincentGarreau/particles.js/master/demo/media/star.png') repeat top center;
+  z-index: 0;
+  animation: moveStars 100s linear infinite;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.stars2 {
+  background-size: contain;
+  animation-duration: 200s;
+  opacity: 0.2;
+}
+
+.stars3 {
+  background-size: cover;
+  animation-duration: 300s;
+  opacity: 0.1;
+}
+
+@keyframes moveStars {
+  0% { background-position: 0 0; }
+  100% { background-position: -10000px 5000px; }
+}

@@ -34,7 +34,7 @@ const EbooksPage = () => {
         currency: "INR",
         name: "Greek God Squad",
         description: "Shred Like a Greek God - EBook",
-        image: "./wlogo.jpeg",
+        image: "./ebook.webp",
         order_id: orderId,
         handler: async function (response: any) {
           try {
@@ -105,9 +105,9 @@ const EbooksPage = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
         <div className="bg-white/10 border border-white/20 rounded-xl p-4 sm:p-5 shadow-lg backdrop-blur-sm transition hover:scale-105 hover:shadow-2xl duration-300">
           <img
-            src="./ebook1.jpeg"
+            src="./ebook.webp"
             alt="Ebook Cover"
-            className="w-full aspect-[9/10] object-cover rounded-lg mb-4"
+            className="w-full aspect-[9/10] object-contain rounded-lg mb-4 bg-white"
           />
           <h3 className="text-lg sm:text-xl font-semibold mb-2">Greek God chest workout</h3>
           <p className="text-gray-300 text-xs sm:text-sm mb-4">
