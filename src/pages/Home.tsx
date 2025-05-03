@@ -82,7 +82,7 @@ export default function Home() {
       style={{
         backgroundImage: "url('./bg-pic.webp')",
         backgroundSize: 'cover',
-        backgroundPosition: 'center 30%',
+        backgroundPosition: '45% 35%',
         backgroundRepeat: 'no-repeat',
         backgroundAttachment: 'fixed',
       }}
@@ -95,38 +95,47 @@ export default function Home() {
         <DumbbellLoader show={loading} />
 
         {/* Navbar */}
-        <div className="py-4 px-4 sm:px-6 bg-white text-black shadow-md flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sticky top-0 z-10">
-          <h1 className="text-2xl font-extrabold tracking-widest uppercase text-center sm:text-left">
-            The Greek God Squad
-          </h1>
-          <div className="flex items-center justify-center sm:justify-end gap-3 flex-wrap">
-            <button onClick={() => handleClick('/achievements')} className="hover:text-gray-600 transition text-sm font-semibold">
-              Achievements
-            </button>
-            <button onClick={() => handleClick('/clients')} className="hover:text-gray-600 transition text-sm font-semibold">
-              Transformations
-            </button>
-            <button onClick={() => handleClick('/ebooks')} className="hover:text-gray-600 transition text-sm font-semibold">
-              Explore Ebooks
-            </button>
-            <a
-              href="https://apps.apple.com/app/thegreekgodsquad/id6740698559"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-black text-white text-xs px-3 py-1.5 rounded-md hover:bg-gray-800 transition font-semibold"
-            >
-              iOS App
-            </a>
-            <a
-              href="https://play.google.com/store/apps/details?id=com.ydl.thegreekgodsquad"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-black text-white text-xs px-3 py-1.5 rounded-md hover:bg-gray-800 transition font-semibold"
-            >
-              Android App
-            </a>
-          </div>
-        </div>
+<div className="py-4 px-4 sm:px-6 bg-black text-yellow-400 shadow-md flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sticky top-0 z-10">
+  <h1 className="text-2xl font-extrabold tracking-widest uppercase text-center sm:text-left">
+    The Greek God Squad
+  </h1>
+  <div className="flex items-center justify-center sm:justify-end gap-3 flex-wrap">
+    <button
+      onClick={() => handleClick('/achievements')}
+      className="hover:text-yellow-300 transition text-sm font-semibold"
+    >
+      Achievements
+    </button>
+    <button
+      onClick={() => handleClick('/clients')}
+      className="hover:text-yellow-300 transition text-sm font-semibold"
+    >
+      Transformations
+    </button>
+    <button
+      onClick={() => handleClick('/ebooks')}
+      className="hover:text-yellow-300 transition text-sm font-semibold"
+    >
+      Explore Ebooks
+    </button>
+    <a
+      href="https://apps.apple.com/app/thegreekgodsquad/id6740698559"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="bg-white text-black text-xs px-3 py-1.5 rounded-md hover:bg-gray-200 transition font-semibold"
+    >
+      iOS App
+    </a>
+    <a
+      href="https://play.google.com/store/apps/details?id=com.ydl.thegreekgodsquad"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="bg-white text-black text-xs px-3 py-1.5 rounded-md hover:bg-gray-200 transition font-semibold"
+    >
+      Android App
+    </a>
+  </div>
+</div>
 
         {/* Hero Section */}
         <div className="flex items-center justify-center py-12 sm:py-16 px-2">
