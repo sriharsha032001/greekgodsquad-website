@@ -141,6 +141,8 @@ export default function Home() {
         <div className="flex items-center justify-center py-12 sm:py-16 px-2">
           <motion.h1
             initial={{ opacity: 0, y: -40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center text-white px-2 drop-shadow-lg"
@@ -199,7 +201,7 @@ export default function Home() {
                       name: 'Chakri - The GreekGod',
                       title: 'Fitness Coach',
                       description: 'Specializes in strength training and body transformation with 5+ years of experience.',
-                      image: './coach1.jpeg',
+                      image: './coach1.webp',
                       link: 'https://www.instagram.com/the_greek_.god_?igsh=MTJmdGpuZXdzdDR5dw==',
                       handle: '@the_greek_god'
                     },
@@ -207,7 +209,7 @@ export default function Home() {
                       name: 'Deva Kiran',
                       title: 'Fitness Coach',
                       description: 'Specializes in strength training and body transformation with 3+ years of experience.',
-                      image: './coach2.jpeg',
+                      image: './coach2.webp',
                       link: 'https://www.instagram.com/deva.inx?igsh=YjJ1amRieWh3MTJq',
                       handle: '@deva.inx'
                     }
