@@ -152,6 +152,8 @@ const WhyJoinSection = React.memo(() => (
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const [age, setAge] = useState<number | null>(null);
+  const [dob, setDob] = useState('');
+  const [phone, setPhone] = useState('');
   const navigate = useNavigate();
 
   // Use useCallback for handlers
@@ -195,23 +197,46 @@ export default function Home() {
   }, [age]);
 
   const handleDobChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const dob = e.target.value;
-    const dateParts = dob.split('-');
-    if (dateParts.length === 3) {
-      const birthDate = new Date(
-        `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`
-      );
-      const diff = Date.now() - birthDate.getTime();
-      const ageDate = new Date(diff);
-      const calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+    let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+    
+    // Format the date as user types
+    if (value.length > 0) {
+      if (value.length <= 2) {
+        // DD
+        value = value;
+      } else if (value.length <= 4) {
+        // DD-MM
+        value = `${value.slice(0, 2)}-${value.slice(2)}`;
+      } else {
+        // DD-MM-YYYY
+        value = `${value.slice(0, 2)}-${value.slice(2, 4)}-${value.slice(4, 8)}`;
+      }
+    }
+
+    setDob(value);
+
+    // Calculate age if we have a complete date
+    if (value.length === 10) {
+      const [day, month, year] = value.split('-').map(Number);
+      const birthDate = new Date(year, month - 1, day);
+      const today = new Date();
+      let calculatedAge = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        calculatedAge--;
+      }
+      
       setAge(calculatedAge);
+    } else {
+      setAge(null);
     }
   }, []);
 
   const handlePhoneChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const phone = e.target.value.replace(/[^0-9]/g, '');
-    if (phone.length <= 10) {
-      e.target.value = phone;
+    const value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+    if (value.length <= 10) {
+      setPhone(value);
     }
   }, []);
 
@@ -436,8 +461,9 @@ export default function Home() {
                   type="text"
                   required
                   placeholder="DD-MM-YYYY"
-                  pattern="\\d{2}-\\d{2}-\\d{4}"
+                  value={dob}
                   onChange={handleDobChange}
+                  maxLength={10}
                   className="w-full bg-gray-100 border border-gray-300 rounded-md p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600"
                   autoComplete="bday"
                 />
@@ -452,12 +478,15 @@ export default function Home() {
                 />
                 <input
                   name="phone"
-                  type="text"
+                  type="tel"
                   required
-                  placeholder="Phone"
+                  placeholder="Phone Number"
+                  value={phone}
                   onChange={handlePhoneChange}
                   maxLength={10}
-                  pattern="\\d{10}"
+                  minLength={10}
+                  pattern="[0-9]{10}"
+                  title="Please enter exactly 10 digits"
                   className="w-full bg-gray-100 border border-gray-300 rounded-md p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600"
                   autoComplete="tel"
                 />
