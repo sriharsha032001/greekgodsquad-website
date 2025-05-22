@@ -76,6 +76,23 @@ const OptimizedImage = React.memo(({ src, alt, className }: { src: string; alt: 
 
 OptimizedImage.displayName = 'OptimizedImage';
 
+// Add will-change hint for better performance
+const HeroTitle = React.memo(() => (
+  <motion.h1
+    initial={{ opacity: 0, y: -40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.3 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+    className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center text-white px-2 drop-shadow-lg mb-6 will-change-transform"
+    style={{ textRendering: 'optimizeLegibility' }}
+  >
+    WELCOME TO THE GREEK GOD SQUAD
+  </motion.h1>
+));
+
+HeroTitle.displayName = 'HeroTitle';
+
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const [age, setAge] = useState<number | null>(null);
@@ -157,13 +174,10 @@ export default function Home() {
 
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <div
-          className="absolute inset-0 bg-black bg-opacity-70 z-0"
+          className="absolute inset-0 bg-black bg-opacity-70 z-0 bg-center bg-cover bg-no-repeat bg-fixed md:bg-fixed"
           style={{
             backgroundImage: "url('./bg-pic.webp')",
-            backgroundSize: 'cover',
-            backgroundPosition: '45% 35%',
-            backgroundRepeat: 'no-repeat',
-            backgroundAttachment: 'fixed',
+            backgroundPosition: 'center 35%'
           }}
           aria-hidden="true"
         />
@@ -218,20 +232,13 @@ export default function Home() {
 
           {/* Hero Section with CTA */}
           <section className="flex flex-col items-center justify-center py-12 sm:py-16 px-2">
-            <motion.h1
-              initial={{ opacity: 0, y: -40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1 }}
-              className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center text-white px-2 drop-shadow-lg mb-6"
-            >
-              WELCOME TO THE GREEK GOD SQUAD
-            </motion.h1>
+            <Suspense fallback={<div className="h-16" />}>
+              <HeroTitle />
+            </Suspense>
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
+              transition={{ delay: 0.3 }}
               className="text-xl text-center text-yellow-400 mb-8 max-w-2xl"
             >
               Join 5000+ members who transformed their lives. Start your journey today!
@@ -239,9 +246,9 @@ export default function Home() {
             <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
+              transition={{ delay: 0.5 }}
               onClick={() => document.getElementById('join-form')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-yellow-400 text-black px-8 py-3 rounded-full font-bold text-lg hover:bg-yellow-300 transition-colors shadow-lg"
+              className="bg-yellow-400 text-black px-8 py-3 rounded-full font-bold text-lg hover:bg-yellow-300 transition-colors shadow-lg will-change-transform"
             >
               Start Your Transformation
             </motion.button>
