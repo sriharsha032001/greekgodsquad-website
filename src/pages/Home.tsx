@@ -93,6 +93,62 @@ const HeroTitle = React.memo(() => (
 
 HeroTitle.displayName = 'HeroTitle';
 
+// Memoized components for better performance
+const HeroSubtitle = React.memo(() => (
+  <motion.p
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ delay: 0.2 }}
+    className="text-xl text-center text-yellow-400 mb-8 max-w-2xl"
+    style={{ textRendering: 'optimizeLegibility' }}
+  >
+    Join 5000+ members who transformed their lives. Start your journey today!
+  </motion.p>
+));
+
+const AboutSection = React.memo(() => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.4 }}
+    className="bg-gray-900 bg-opacity-80 p-6 rounded-xl shadow-md hover:shadow-lg transition backdrop-blur-sm"
+  >
+    <h2 className="text-2xl font-bold mb-4">About Us</h2>
+    <p className="text-gray-300 text-base font-bold">
+      The Greek God Squad is more than a fitness program — it's a transformation
+      movement. We're focused on building stronger bodies and sharper minds through
+      customized training, nutrition, and community-driven motivation.
+    </p>
+    <div className="mt-4 flex items-center space-x-2">
+      <span className="text-yellow-400">★</span>
+      <span className="text-yellow-400">★</span>
+      <span className="text-yellow-400">★</span>
+      <span className="text-yellow-400">★</span>
+      <span className="text-yellow-400">★</span>
+      <span className="text-gray-300 text-sm">(4.9/5 from 1000+ reviews)</span>
+    </div>
+  </motion.div>
+));
+
+const WhyJoinSection = React.memo(() => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.4 }}
+    className="bg-gray-800 bg-opacity-80 border border-gray-700 p-6 rounded-xl shadow-md hover:shadow-lg transition backdrop-blur-sm"
+  >
+    <h2 className="text-2xl font-bold mb-4">Why Join Us?</h2>
+    <ul className="list-disc list-inside space-y-2 text-gray-300 font-bold">
+      <li>Customized training programs tailored to your body</li>
+      <li>Expert diet plans crafted by our coaches</li>
+      <li>Regular progress tracking & feedback</li>
+      <li>Motivational community support</li>
+      <li>Flexible access via our mobile app</li>
+      <li>Money-back guarantee if not satisfied</li>
+    </ul>
+  </motion.div>
+));
+
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const [age, setAge] = useState<number | null>(null);
@@ -235,18 +291,13 @@ export default function Home() {
             <Suspense fallback={<div className="h-16" />}>
               <HeroTitle />
             </Suspense>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="text-xl text-center text-yellow-400 mb-8 max-w-2xl"
-            >
-              Join 5000+ members who transformed their lives. Start your journey today!
-            </motion.p>
+            <Suspense fallback={<div className="h-8" />}>
+              <HeroSubtitle />
+            </Suspense>
             <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
+              transition={{ delay: 0.3 }}
               onClick={() => document.getElementById('join-form')?.scrollIntoView({ behavior: 'smooth' })}
               className="bg-yellow-400 text-black px-8 py-3 rounded-full font-bold text-lg hover:bg-yellow-300 transition-colors shadow-lg will-change-transform"
             >
@@ -262,7 +313,7 @@ export default function Home() {
                   key={metric.label}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ delay: index * 0.1, duration: 0.3 }}
                   className="text-center"
                 >
                   <div className="text-3xl md:text-4xl font-bold text-yellow-400 mb-2">{metric.number}</div>
@@ -278,47 +329,12 @@ export default function Home() {
             <Suspense fallback={<DumbbellLoader show={true} />}>
               <LazyLoadingContent>
                 <div className="space-y-10">
-                  {/* About Section */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="bg-gray-900 bg-opacity-80 p-6 rounded-xl shadow-md hover:shadow-lg transition backdrop-blur-sm"
-                  >
-                    <h2 className="text-2xl font-bold mb-4">About Us</h2>
-                    <p className="text-gray-300 text-base font-bold">
-                      The Greek God Squad is more than a fitness program — it's a transformation
-                      movement. We're focused on building stronger bodies and sharper minds through
-                      customized training, nutrition, and community-driven motivation.
-                    </p>
-                    <div className="mt-4 flex items-center space-x-2">
-                      <span className="text-yellow-400">★</span>
-                      <span className="text-yellow-400">★</span>
-                      <span className="text-yellow-400">★</span>
-                      <span className="text-yellow-400">★</span>
-                      <span className="text-yellow-400">★</span>
-                      <span className="text-gray-300 text-sm">(4.9/5 from 1000+ reviews)</span>
-                    </div>
-                  </motion.div>
-
-                  {/* Why Join */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="bg-gray-800 bg-opacity-80 border border-gray-700 p-6 rounded-xl shadow-md hover:shadow-lg transition backdrop-blur-sm"
-                  >
-                    <h2 className="text-2xl font-bold mb-4">Why Join Us?</h2>
-                    <ul className="list-disc list-inside space-y-2 text-gray-300 font-bold">
-                      <li>Customized training programs tailored to your body</li>
-                      <li>Expert diet plans crafted by our coaches</li>
-                      <li>Regular progress tracking & feedback</li>
-                      <li>Motivational community support</li>
-                      <li>Flexible access via our mobile app</li>
-                      <li>Money-back guarantee if not satisfied</li>
-                    </ul>
-                  </motion.div>
-
+                  <Suspense fallback={<div className="h-48" />}>
+                    <AboutSection />
+                  </Suspense>
+                  <Suspense fallback={<div className="h-48" />}>
+                    <WhyJoinSection />
+                  </Suspense>
                   {/* Coaches */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -506,3 +522,8 @@ export default function Home() {
     </div>
   );
 }
+
+// Add display names for memoized components
+HeroSubtitle.displayName = 'HeroSubtitle';
+AboutSection.displayName = 'AboutSection';
+WhyJoinSection.displayName = 'WhyJoinSection';
