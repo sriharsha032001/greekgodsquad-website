@@ -21,7 +21,7 @@ const EbooksPage = () => {
       const orderResponse = await fetch(`${API_BASE_URL}/api/payment/create-order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: 5900 }),
+        body: JSON.stringify({ amount: 7900 }),
       });
 
       if (!orderResponse.ok) throw new Error("Failed to create order.");
