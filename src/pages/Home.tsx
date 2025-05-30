@@ -53,13 +53,20 @@ const TESTIMONIALS = [
   }
 ];
 
-// Add success metrics
+// Restore original success metrics
 const SUCCESS_METRICS = [
-  { number: "5000+", label: "Active Members" },
+  { number: "500+", label: "Active Members" },
   { number: "95%", label: "Success Rate" },
-  { number: "10k+", label: "Transformations" },
+  { number: "1000+", label: "Transformations" },
   { number: "4.9/5", label: "Member Rating" }
 ];
+
+// Add limited time offer
+const LIMITED_TIME_OFFER = {
+  discount: "50%",
+  validUntil: "30 days",
+  spotsLeft: "450"
+};
 
 // Performance optimized image component
 const OptimizedImage = React.memo(({ src, alt, className }: { src: string; alt: string; className: string }) => (
@@ -338,7 +345,7 @@ export default function Home() {
                   key={metric.label}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1, duration: 0.3 }}
+                  transition={{ delay: index * 0.1 }}
                   className="text-center"
                 >
                   <div className="text-3xl md:text-4xl font-bold text-yellow-400 mb-2">{metric.number}</div>
