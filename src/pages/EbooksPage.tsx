@@ -30,7 +30,7 @@ const EbooksPage = () => {
 
       const options = {
         key: razorpayKey,
-        amount: 5900,
+        amount: 7900,
         currency: "INR",
         name: "Greek God Squad",
         description: "Shred Like a Greek God - EBook",
@@ -120,7 +120,7 @@ const EbooksPage = () => {
               loading ? "bg-gray-400" : "bg-gradient-to-r from-red-500 to-orange-600"
             } text-white py-2 px-4 rounded-lg shadow-md hover:from-red-400 hover:to-orange-500 transition-all duration-300 transform hover:scale-105 w-full sm:w-auto`}
           >
-            {loading ? "Processing..." : "👑 Buy Now ₹59"}
+            {loading ? "Processing..." : "👑 Buy Now ₹79"}
           </button>
         </div>
       </div>
