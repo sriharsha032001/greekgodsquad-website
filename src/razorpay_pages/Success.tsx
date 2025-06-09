@@ -58,6 +58,15 @@ const Success = () => {
         The download link will be active for only 2mins.
       </p>
 
+      {/* NOTE section */}
+   <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded mb-4 max-w-md text-sm">
+   <strong>NOTE:</strong>
+   <ul className="list-disc list-inside mt-1">
+    <li>The download link for the Ebook is valid only for <b>5 minutes</b>.</li>
+    <li>Please disable your pop-up blocker for smooth downloads.</li>
+   </ul>
+   </div>
+
       {downloadUrl ? (
         <button
           className="px-6 py-3 bg-green-500 text-white rounded-full hover:bg-green-600 transition mb-4"

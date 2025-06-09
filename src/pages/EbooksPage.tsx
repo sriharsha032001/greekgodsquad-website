@@ -13,6 +13,8 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "") || ""
 const EbooksPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [errorCount, setErrorCount] = useState(0);
+  const [showQRModal, setShowQRModal] = useState(false);
 
   const handlePayment = async () => {
     setLoading(true);
@@ -86,8 +88,11 @@ const EbooksPage = () => {
       razorpay.open();
     } catch (error) {
       console.error(error);
+      const newErrorCount = errorCount + 1;
+      setErrorCount(newErrorCount);
       toast.error("An error occurred. Please try again.");
       setLoading(false);
+      if (newErrorCount >= 3) setShowQRModal(true);
     }
   };
 
@@ -124,6 +129,42 @@ const EbooksPage = () => {
           </button>
         </div>
       </div>
+
+      {/* QR Payment Modal */}
+      {showQRModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black bg-opacity-60 backdrop-blur-[2px]" />
+          <div className="relative z-10 bg-black text-white rounded-2xl p-6 shadow-2xl w-full max-w-xs sm:max-w-sm flex flex-col items-center">
+            <img
+              src="./qr-code.jpeg" // <-- Add your QR code image here
+              alt="QR Code for payment"
+              className="w-48 h-48 rounded-lg mb-4 border-2 border-gray-300 object-contain"
+            />
+            <h3 className="text-lg font-bold mb-2 text-center">Alternate Payment Option</h3>
+            <p className="text-sm text-white-700 text-center mb-2">
+              Send Payment → Take Screenshot → Send to <b>+91 9160427763</b>
+            </p>
+            <a
+              href="https://wa.me/919160427763"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg mt-2 mb-2 flex items-center justify-center gap-2 hover:bg-green-600 transition"
+            >
+              <svg className="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12.004 2c-5.514 0-9.999 4.486-9.999 10 0 1.768.461 3.489 1.336 5.009l-1.409 5.176 5.298-1.392c1.468.799 3.124 1.207 4.774 1.207h.001c5.514 0 9.999-4.486 9.999-10s-4.485-10-9.999-10zm0 18.164c-1.486 0-2.95-.386-4.227-1.119l-.304-.175-3.145.827.842-3.091-.198-.317c-.82-1.308-1.253-2.814-1.253-4.289 0-4.411 3.589-8 8.001-8 4.412 0 8.001 3.589 8.001 8 0 4.411-3.589 8-8.001 8zm4.348-6.608c-.238-.119-1.406-.695-1.625-.774-.219-.08-.379-.119-.539.119-.159.238-.619.774-.76.934-.14.159-.279.179-.517.06-.238-.119-1.006-.371-1.917-1.184-.708-.631-1.187-1.409-1.327-1.648-.139-.238-.015-.366.104-.485.106-.105.238-.278.357-.417.119-.139.159-.238.238-.397.08-.159.04-.298-.02-.417-.06-.119-.539-1.299-.739-1.778-.194-.471-.392-.408-.539-.417-.14-.009-.299-.011-.458-.011s-.417.06-.636.298c-.219.238-.857.838-.857 2.038 0 1.2.877 2.358 1.001 2.518.119.159 1.723 2.634 4.181 3.591.584.2 1.039.319 1.394.407.586.149 1.12.128 1.542.078.471-.059 1.406-.573 1.604-1.127.199-.553.199-1.027.139-1.127-.06-.1-.218-.159-.457-.278z"/>
+              </svg>
+              WhatsApp Now
+            </a>
+            <button
+              onClick={() => setShowQRModal(false)}
+              className="mt-2 px-4 py-2 bg-white-600 text-white rounded-lg font-medium shadow hover:bg-white-700 transition"
+              >
+              Close
+              </button>
+
+          </div>
+        </div>
+      )}
     </div>
   );
 };
