@@ -99,33 +99,37 @@ const EbooksPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white py-12 px-4 sm:px-6 relative">
+    <div className="min-h-screen bg-black text-white py-8 px-4 sm:px-6 lg:px-8 relative">
       <button
         onClick={() => navigate(-1)}
-        className="absolute top-6 left-6 bg-white/10 border border-white/20 text-white py-2 px-4 rounded-lg hover:bg-white/20 transition"
+        className="absolute top-4 left-4 bg-white/10 border border-white/20 text-white py-2 px-4 rounded-lg hover:bg-white/20 transition z-10"
       >
         ← Back
       </button>
 
-      <h1 className="text-4xl font-bold text-center mb-10">EBooks Library</h1>
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-8">
+        EBooks Library
+      </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
-        <div className="bg-white/10 border border-white/20 rounded-xl p-4 sm:p-5 shadow-lg backdrop-blur-sm transition hover:scale-105 hover:shadow-2xl duration-300">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="bg-white/10 border border-white/20 rounded-xl p-4 sm:p-6 shadow-lg backdrop-blur-sm transition hover:scale-105 hover:shadow-2xl duration-300">
           <img
             src="./ebook.webp"
             alt="Ebook Cover"
-            className="w-full aspect-[9/10] object-contain rounded-lg mb-4 bg-white"
+            className="w-full aspect-[4/5] object-contain rounded-lg mb-4 bg-white"
           />
-          <h3 className="text-lg sm:text-xl font-semibold mb-2">Greek God chest workout</h3>
-          <p className="text-gray-300 text-xs sm:text-sm mb-4">
-            A complete four-week greekgod chest workout guide. Progressive overload to peak chest development.
+          <h3 className="text-lg sm:text-xl font-semibold mb-2 text-center">
+            Greek God Chest Workout
+          </h3>
+          <p className="text-gray-300 text-sm sm:text-base mb-4 text-center">
+            A complete four-week guide. Progressive overload for peak chest development.
           </p>
           <button
             onClick={handlePayment}
             disabled={loading}
             className={`${
               loading ? "bg-gray-400" : "bg-gradient-to-r from-red-500 to-orange-600"
-            } text-white py-2 px-4 rounded-lg shadow-md hover:from-red-400 hover:to-orange-500 transition-all duration-300 transform hover:scale-105 w-full sm:w-auto`}
+            } text-white py-2 px-4 rounded-lg shadow-md hover:from-red-400 hover:to-orange-500 transition-all duration-300 transform hover:scale-105 w-full`}
           >
             {loading ? "Processing..." : "👑 Buy Now ₹79"}
           </button>
@@ -133,43 +137,45 @@ const EbooksPage = () => {
       </div>
 
       {showQRModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black bg-opacity-60 backdrop-blur-[2px]" />
-          <div className="relative z-10 bg-black text-white rounded-2xl p-6 shadow-2xl w-full max-w-xs sm:max-w-sm flex flex-col items-center">
+        <div className="fixed inset-0 flex items-center justify-center p-4 z-50">
+          <div className="absolute inset-0 bg-black bg-opacity-70 backdrop-blur-md" />
+          <div className="relative z-10 bg-black text-white rounded-2xl p-6 w-full max-w-sm mx-auto flex flex-col items-center">
             <div
-              className="relative cursor-pointer"
+              className="relative w-full cursor-pointer"
               onClick={() => setQrRevealed(true)}
             >
               <img
                 src="./qr-code.jpeg"
                 alt="QR Code for payment"
-                className={`w-48 h-48 mb-2 rounded-lg border-2 border-gray-300 object-contain transition-filter duration-500 ${
-                  qrRevealed ? "filter-none" : "filter blur-lg"
+                className={`w-full h-auto aspect-square rounded-lg border-2 border-gray-300 object-contain transition-filter duration-500 ${
+                  qrRevealed ? "filter-none" : "filter blur-xl"
                 }`}
               />
               {!qrRevealed && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="bg-white bg-opacity-70 text-black px-3 py-1 rounded-lg font-medium">
+                  <span className="bg-white bg-opacity-80 text-black px-4 py-2 rounded-lg font-medium text-lg">
                     Generate QR
                   </span>
                 </div>
               )}
             </div>
-            <h3 className="text-lg font-bold mb-2 text-center">Alternate Payment Option</h3>
-            <p className="text-sm text-gray-300 text-center mb-4">
-              Send Payment → Take Screenshot → Send to <b>+91 9160427763</b>
+            <h3 className="text-lg font-bold mb-2 text-center mt-4">
+              Alternate Payment
+            </h3>
+            <p className="text-sm text-gray-300 text-center mb-4 px-2">
+              Send Payment → Take Screenshot → Send to <b>+91 91604 27763</b>
             </p>
             <a
               href="https://wa.me/919160427763"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg mb-2 flex items-center justify-center gap-2 hover:bg-green-600 transition"
+              className="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg mb-2 w-full text-center hover:bg-green-600 transition"
             >
               WhatsApp Now
             </a>
             <button
               onClick={() => setShowQRModal(false)}
-              className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium shadow hover:bg-blue-700 transition"
+              className="mt-2 py-2 w-full bg-blue-600 text-white rounded-lg font-medium shadow hover:bg-blue-700 transition"
             >
               Close
             </button>
