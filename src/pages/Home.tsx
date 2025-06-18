@@ -109,7 +109,7 @@ const HeroSubtitle = React.memo(() => (
     className="text-xl text-center text-yellow-400 mb-8 max-w-2xl"
     style={{ textRendering: 'optimizeLegibility' }}
   >
-    Join 5000+ members who transformed their lives. Start your journey today!
+    Join 1000+ members who transformed their lives. Start your journey today!
   </motion.p>
 ));
 
@@ -251,10 +251,10 @@ export default function Home() {
     <div className="min-h-screen font-sans px-4 sm:px-6 relative overflow-hidden text-white">
       <Helmet>
         <title>The Greek God Squad - Transform Your Body, Transform Your Life</title>
-        <meta name="description" content="Join 5000+ successful members who transformed their lives with The Greek God Squad. Expert coaching, personalized plans, and proven results." />
+        <meta name="description" content="Join 1000+ successful members who transformed their lives with The Greek God Squad. Expert coaching, personalized plans, and proven results." />
         <meta name="keywords" content="fitness, training, body transformation, Greek God Squad, personal training, fitness coach, weight loss, muscle gain" />
         <meta property="og:title" content="The Greek God Squad - Transform Your Body, Transform Your Life" />
-        <meta property="og:description" content="Join 5000+ successful members who transformed their lives with The Greek God Squad. Expert coaching, personalized plans, and proven results." />
+        <meta property="og:description" content="Join 1000+ successful members who transformed their lives with The Greek God Squad. Expert coaching, personalized plans, and proven results." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={window.location.href} />
         <meta property="og:image" content="./bg-pic.webp" />
@@ -334,6 +334,20 @@ export default function Home() {
               className="bg-yellow-400 text-black px-8 py-3 rounded-full font-bold text-lg hover:bg-yellow-300 transition-colors shadow-lg will-change-transform"
             >
               Start Your Transformation
+            </motion.button>
+             {/* 🚀 Modern Ebook CTA with DumbbellLoader */}
+            <AnimatePresence>
+            {loading && <DumbbellLoader show={loading} />}
+            </AnimatePresence>
+
+            <motion.button
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.6 }}
+            onClick={() => handleClick('/ebooks')}
+            className="mt-6 inline-flex items-center justify-center gap-2 bg-black border border-gray-300 text-white px-6 py-3 rounded-full font-semibold text-sm sm:text-base hover:bg-gray-900 hover:border-gray-500 transition-all duration-300 shadow-md hover:shadow-xl"
+            >
+            Explore Our Premium Ebooks
             </motion.button>
           </section>
 
