@@ -345,7 +345,7 @@ export default function Home() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.6 }}
             onClick={() => handleClick('/ebooks')}
-            className="mt-6 inline-flex items-center justify-center gap-2 bg-yellow-400 border border-gray-300 text-black px-6 py-3 rounded-full font-bold text-lg hover:bg-gray-900 hover:border-gray-500 transition-all duration-300 shadow-md hover:shadow-xl"
+            className="mt-6 inline-flex items-center justify-center gap-2 bg-yellow-400 border border-gray-300 text-black px-6 py-3 rounded-full font-bold text-lg hover:bg-yellow-400 hover:border-gray-500 transition-all duration-300 shadow-md hover:shadow-xl"
             >
             Explore Our Premium Ebooks
             </motion.button>
