@@ -550,7 +550,7 @@ export default function Home() {
               <div className="mt-8">
                 <h4 className="text-lg font-bold text-center text-white mb-2">What Our Members Say</h4>
                 <p className="text-sm text-gray-300 text-center italic font-semibold">
-                  "Joining the Greek God Squad was the best decision I ever made. I feel stronger, more disciplined, and part of an amazing community!" – Abhiram.
+                  "Joining the Greek God Squad was the best decision I ever made.I feel stronger, more disciplined, and part of an amazing community!" – Abhiram.
                 </p>
               </div>
             </motion.div>
