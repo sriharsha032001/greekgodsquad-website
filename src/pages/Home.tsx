@@ -248,7 +248,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen font-sans px-4 sm:px-6 relative overflow-hidden text-white">
+    <div className="min-h-screen font-sans bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800 text-white">
       <Helmet>
         <title>The Greek God Squad - Transform Your Body, Transform Your Life</title>
         <meta name="description" content="Join 1000+ successful members who transformed their lives with The Greek God Squad. Expert coaching, personalized plans, and proven results." />
@@ -262,40 +262,39 @@ export default function Home() {
 
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <div
-          className="absolute inset-0 bg-black bg-opacity-70 z-0 bg-center bg-cover bg-no-repeat bg-fixed md:bg-fixed"
+          className="absolute inset-0 z-0 bg-center bg-cover bg-no-repeat bg-fixed md:bg-fixed"
           style={{
             backgroundImage: "url('./bg-pic.webp')",
-            backgroundPosition: 'center 35%'
+            backgroundPosition: 'center 35%',
+            opacity: 0.25,
+            filter: 'blur(2px)',
           }}
           aria-hidden="true"
         />
-
         <main className="relative z-10">
-          <AnimatePresence>
-            {loading && <DumbbellLoader show={loading} />}
-          </AnimatePresence>
+          <AnimatePresence>{loading && <DumbbellLoader show={loading} />}</AnimatePresence>
 
           {/* Navbar */}
-          <nav className="py-4 px-4 sm:px-6 bg-black text-yellow-400 shadow-md flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sticky top-0 z-10">
-            <h1 className="text-2xl font-extrabold tracking-widest uppercase text-center sm:text-left">
+          <nav className="py-4 px-4 sm:px-8 bg-black/80 backdrop-blur-md text-yellow-400 shadow-lg flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sticky top-0 z-20 rounded-b-2xl">
+            <h1 className="text-3xl font-extrabold tracking-widest uppercase text-center sm:text-left font-display text-yellow-300 drop-shadow-lg">
               The Greek God Squad
             </h1>
             <div className="flex items-center justify-center sm:justify-end gap-3 flex-wrap">
               <button
                 onClick={() => handleClick('/achievements')}
-                className="hover:text-yellow-300 transition text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400"
+                className="rounded-full px-4 py-2 bg-yellow-400 text-black font-bold shadow hover:bg-yellow-300 focus-visible:outline-2 focus-visible:outline-yellow-400 transition-all"
               >
                 Achievements
               </button>
               <button
                 onClick={() => handleClick('/clients')}
-                className="hover:text-yellow-300 transition text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400"
+                className="rounded-full px-4 py-2 bg-yellow-400 text-black font-bold shadow hover:bg-yellow-300 focus-visible:outline-2 focus-visible:outline-yellow-400 transition-all"
               >
                 Transformations
               </button>
               <button
                 onClick={() => handleClick('/ebooks')}
-                className="hover:text-yellow-300 transition text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400"
+                className="rounded-full px-4 py-2 bg-yellow-400 text-black font-bold shadow hover:bg-yellow-300 focus-visible:outline-2 focus-visible:outline-yellow-400 transition-all"
               >
                 Explore Ebooks
               </button>
@@ -303,7 +302,7 @@ export default function Home() {
                 href="https://apps.apple.com/app/thegreekgodsquad/id6740698559"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white text-black text-xs px-3 py-1.5 rounded-md hover:bg-gray-200 transition font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400"
+                className="rounded-full px-4 py-2 bg-white text-black font-bold shadow hover:bg-gray-200 focus-visible:outline-2 focus-visible:outline-yellow-400 text-xs transition-all"
               >
                 iOS App
               </a>
@@ -311,7 +310,7 @@ export default function Home() {
                 href="https://play.google.com/store/apps/details?id=com.ydl.thegreekgodsquad"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white text-black text-xs px-3 py-1.5 rounded-md hover:bg-gray-200 transition font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400"
+                className="rounded-full px-4 py-2 bg-white text-black font-bold shadow hover:bg-gray-200 focus-visible:outline-2 focus-visible:outline-yellow-400 text-xs transition-all"
               >
                 Android App
               </a>
@@ -319,40 +318,31 @@ export default function Home() {
           </nav>
 
           {/* Hero Section with CTA */}
-          <section className="flex flex-col items-center justify-center py-12 sm:py-16 px-2">
-            <Suspense fallback={<div className="h-16" />}>
-              <HeroTitle />
-            </Suspense>
-            <Suspense fallback={<div className="h-8" />}>
-              <HeroSubtitle />
-            </Suspense>
+          <section className="flex flex-col items-center justify-center py-14 sm:py-20 px-2">
+            <Suspense fallback={<div className="h-16" />}> <HeroTitle /> </Suspense>
+            <Suspense fallback={<div className="h-8" />}> <HeroSubtitle /> </Suspense>
             <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
               onClick={() => document.getElementById('join-form')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-yellow-400 text-black px-8 py-3 rounded-full font-bold text-lg hover:bg-yellow-300 transition-colors shadow-lg will-change-transform"
+              className="mt-4 bg-yellow-400 text-black px-8 py-3 rounded-full font-bold text-lg shadow-lg hover:bg-yellow-300 focus-visible:outline-2 focus-visible:outline-yellow-400 transition-all"
             >
               Start Your Transformation
             </motion.button>
-             {/* 🚀 Modern Ebook CTA with DumbbellLoader */}
-            <AnimatePresence>
-            {loading && <DumbbellLoader show={loading} />}
-            </AnimatePresence>
-
             <motion.button
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.6 }}
-            onClick={() => handleClick('/ebooks')}
-            className="mt-6 inline-flex items-center justify-center gap-2 bg-yellow-400 border border-gray-300 text-black px-6 py-3 rounded-full font-bold text-lg hover:bg-yellow-400 hover:border-gray-500 transition-all duration-300 shadow-md hover:shadow-xl"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.6 }}
+              onClick={() => handleClick('/ebooks')}
+              className="mt-6 inline-flex items-center justify-center gap-2 bg-yellow-400 border border-gray-300 text-black px-6 py-3 rounded-full font-bold text-lg hover:bg-yellow-400 hover:border-gray-500 transition-all duration-300 shadow-md hover:shadow-xl"
             >
-            Explore Our Premium Ebooks
+              Explore Our Premium Ebooks
             </motion.button>
           </section>
 
           {/* Success Metrics */}
-          <section className="py-12 bg-black bg-opacity-50">
+          <section className="py-10 bg-black/60 backdrop-blur rounded-2xl mx-2 my-6">
             <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 px-4">
               {SUCCESS_METRICS.map((metric, index) => (
                 <motion.div
@@ -362,8 +352,8 @@ export default function Home() {
                   transition={{ delay: index * 0.1 }}
                   className="text-center"
                 >
-                  <div className="text-3xl md:text-4xl font-bold text-yellow-400 mb-2">{metric.number}</div>
-                  <div className="text-sm text-gray-300">{metric.label}</div>
+                  <div className="text-3xl md:text-4xl font-extrabold text-yellow-400 mb-2 drop-shadow-lg">{metric.number}</div>
+                  <div className="text-base text-gray-200 font-semibold">{metric.label}</div>
                 </motion.div>
               ))}
             </div>
@@ -372,101 +362,93 @@ export default function Home() {
           {/* Main Grid */}
           <section className="grid grid-cols-1 md:grid-cols-2 gap-10 pb-20 max-w-6xl mx-auto">
             {/* Left Section */}
-            <Suspense fallback={<DumbbellLoader show={true} />}>
-              <LazyLoadingContent>
-                <div className="space-y-10">
-                  <Suspense fallback={<div className="h-48" />}>
-                    <AboutSection />
-                  </Suspense>
-                  <Suspense fallback={<div className="h-48" />}>
-                    <WhyJoinSection />
-                  </Suspense>
-                  {/* Coaches */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="bg-gray-900 bg-opacity-80 p-6 rounded-xl shadow-md hover:shadow-lg transition backdrop-blur-sm"
-                  >
-                    <h2 className="text-2xl font-bold mb-6">Meet Our Coaches</h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                      {COACHES.map((coach, idx) => (
-                        <motion.div
-                          key={coach.name}
-                          className="flex flex-col items-center text-center bg-gray-800 bg-opacity-80 rounded-xl p-6 border border-gray-600 shadow-sm hover:shadow-lg transition backdrop-blur-sm"
-                          initial={{ opacity: 0, scale: 0.95 }}
-                          whileInView={{ opacity: 1, scale: 1 }}
-                          transition={{ duration: 0.5, delay: idx * 0.2 }}
+            <Suspense fallback={<DumbbellLoader show={true} />}> <LazyLoadingContent>
+              <div className="space-y-10">
+                <Suspense fallback={<div className="h-48" />}> <AboutSection /> </Suspense>
+                <Suspense fallback={<div className="h-48" />}> <WhyJoinSection /> </Suspense>
+                {/* Coaches */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="bg-gray-900 bg-opacity-90 p-6 rounded-2xl shadow-lg hover:shadow-2xl transition backdrop-blur-md"
+                >
+                  <h2 className="text-2xl font-extrabold mb-6 text-yellow-400">Meet Our Coaches</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {COACHES.map((coach, idx) => (
+                      <motion.div
+                        key={coach.name}
+                        className="flex flex-col items-center text-center bg-gray-800 bg-opacity-90 rounded-2xl p-6 border border-gray-700 shadow hover:shadow-xl transition backdrop-blur-md"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, delay: idx * 0.2 }}
+                      >
+                        <OptimizedImage
+                          src={coach.image}
+                          alt={`Coach ${coach.name}`}
+                          className="w-24 h-24 rounded-full object-cover mb-4 border-4 border-yellow-400 shadow-lg"
+                        />
+                        <h4 className="text-lg font-bold text-white mb-1">{coach.name}</h4>
+                        <p className="text-sm text-yellow-300 font-semibold mb-1">{coach.title}</p>
+                        <p className="mt-2 text-gray-200 text-sm font-semibold">{coach.description}</p>
+                        <a
+                          href={coach.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-3 text-blue-400 hover:underline text-sm font-bold"
                         >
-                          <OptimizedImage
-                            src={coach.image}
-                            alt={`Coach ${coach.name}`}
-                            className="w-24 h-24 rounded-full object-cover mb-4 border-4 border-white"
-                          />
-                          <h4 className="text-lg font-bold text-white">{coach.name}</h4>
-                          <p className="text-sm text-gray-400 font-bold">{coach.title}</p>
-                          <p className="mt-2 text-gray-300 text-sm font-bold">{coach.description}</p>
-                          <a
-                            href={coach.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="mt-3 text-blue-400 hover:underline text-sm font-bold"
-                          >
-                            {coach.handle}
-                          </a>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </motion.div>
-
-                  {/* Testimonials */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="bg-gray-900 bg-opacity-80 p-6 rounded-xl shadow-md hover:shadow-lg transition backdrop-blur-sm"
-                  >
-                    <h2 className="text-2xl font-bold mb-6">Success Stories</h2>
-                    <div className="space-y-6">
-                      {TESTIMONIALS.map((testimonial, index) => (
-                        <motion.div
-                          key={testimonial.name}
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.2 }}
-                          className="bg-gray-800 bg-opacity-80 p-4 rounded-lg"
-                        >
-                          <div className="mb-3">
-                            <h4 className="font-bold text-white">{testimonial.name}</h4>
-                            <p className="text-yellow-400 text-sm">{testimonial.transformation}</p>
-                          </div>
-                          <p className="text-gray-300 text-sm mb-2">{testimonial.text}</p>
-                          <div className="flex">
-                            {[...Array(testimonial.rating)].map((_, i) => (
-                              <span key={i} className="text-yellow-400">★</span>
-                            ))}
-                          </div>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </motion.div>
-                </div>
-              </LazyLoadingContent>
-            </Suspense>
-
+                          {coach.handle}
+                        </a>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+                {/* Testimonials */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="bg-gray-900 bg-opacity-90 p-6 rounded-2xl shadow-lg hover:shadow-2xl transition backdrop-blur-md"
+                >
+                  <h2 className="text-2xl font-extrabold mb-6 text-yellow-400">Success Stories</h2>
+                  <div className="space-y-6">
+                    {TESTIMONIALS.map((testimonial, index) => (
+                      <motion.div
+                        key={testimonial.name}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.2 }}
+                        className="bg-gray-800 bg-opacity-90 p-4 rounded-xl shadow hover:shadow-xl"
+                      >
+                        <div className="mb-3">
+                          <h4 className="font-bold text-white text-lg">{testimonial.name}</h4>
+                          <p className="text-yellow-400 text-sm font-semibold">{testimonial.transformation}</p>
+                        </div>
+                        <p className="text-gray-200 text-base mb-2">{testimonial.text}</p>
+                        <div className="flex">
+                          {[...Array(testimonial.rating)].map((_, i) => (
+                            <span key={i} className="text-yellow-400 text-lg">★</span>
+                          ))}
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              </div>
+            </LazyLoadingContent> </Suspense>
             {/* Form Section */}
             <motion.div
               id="join-form"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="w-full md:max-w-md mx-auto bg-gray-900 bg-opacity-80 border border-gray-700 p-6 rounded-xl shadow-md self-start hover:shadow-lg transition backdrop-blur-sm"
+              className="w-full md:max-w-md mx-auto bg-gray-900 bg-opacity-90 border border-gray-700 p-8 rounded-2xl shadow-lg self-start hover:shadow-2xl transition backdrop-blur-md"
             >
-              <h3 className="text-xl font-bold mb-2 text-center text-white">Join the Squad</h3>
-              <p className="text-center text-gray-300 text-sm mb-6">
+              <h3 className="text-2xl font-extrabold mb-2 text-center text-yellow-400">Join the Squad</h3>
+              <p className="text-center text-gray-200 text-base mb-6">
                 Start your transformation journey today. Limited spots available!
               </p>
-              <form className="space-y-4" onSubmit={handleFormSubmit} autoComplete="on">
+              <form className="space-y-5" onSubmit={handleFormSubmit} autoComplete="on">
                 <input
                   name="name"
                   type="text"
@@ -474,7 +456,7 @@ export default function Home() {
                   placeholder="Name"
                   pattern="[A-Za-z ]+"
                   title="Name should contain only letters and spaces."
-                  className="w-full bg-gray-100 border border-gray-300 rounded-md p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600"
+                  className="w-full bg-gray-100 border border-gray-300 rounded-full p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400"
                   autoComplete="name"
                 />
                 <input
@@ -485,7 +467,7 @@ export default function Home() {
                   value={dob}
                   onChange={handleDobChange}
                   maxLength={10}
-                  className="w-full bg-gray-100 border border-gray-300 rounded-md p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600"
+                  className="w-full bg-gray-100 border border-gray-300 rounded-full p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400"
                   autoComplete="bday"
                 />
                 <input
@@ -494,7 +476,7 @@ export default function Home() {
                   value={age || ''}
                   readOnly
                   placeholder="Age"
-                  className="w-full bg-gray-100 border border-gray-300 rounded-md p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600"
+                  className="w-full bg-gray-100 border border-gray-300 rounded-full p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400"
                   tabIndex={-1}
                 />
                 <input
@@ -508,7 +490,7 @@ export default function Home() {
                   minLength={10}
                   pattern="[0-9]{10}"
                   title="Please enter exactly 10 digits"
-                  className="w-full bg-gray-100 border border-gray-300 rounded-md p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600"
+                  className="w-full bg-gray-100 border border-gray-300 rounded-full p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400"
                   autoComplete="tel"
                 />
                 <input
@@ -516,7 +498,7 @@ export default function Home() {
                   type="email"
                   required
                   placeholder="Email"
-                  className="w-full bg-gray-100 border border-gray-300 rounded-md p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600"
+                  className="w-full bg-gray-100 border border-gray-300 rounded-full p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400"
                   autoComplete="email"
                 />
                 <input
@@ -524,7 +506,7 @@ export default function Home() {
                   type="number"
                   required
                   placeholder="Height (in cm)"
-                  className="w-full bg-gray-100 border border-gray-300 rounded-md p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600"
+                  className="w-full bg-gray-100 border border-gray-300 rounded-full p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400"
                   autoComplete="off"
                 />
                 <input
@@ -532,12 +514,12 @@ export default function Home() {
                   type="number"
                   required
                   placeholder="Weight (in kg)"
-                  className="w-full bg-gray-100 border border-gray-300 rounded-md p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600"
+                  className="w-full bg-gray-100 border border-gray-300 rounded-full p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400"
                   autoComplete="off"
                 />
                 <button
                   type="submit"
-                  className="w-full bg-yellow-400 text-black py-3 rounded-md hover:bg-yellow-300 transition font-bold text-base focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400 disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full bg-yellow-400 text-black py-3 rounded-full hover:bg-yellow-300 transition font-bold text-base focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400 disabled:opacity-60 disabled:cursor-not-allowed"
                   disabled={loading}
                 >
                   {loading ? 'Processing...' : 'Start Your Journey'}
@@ -546,25 +528,24 @@ export default function Home() {
                   By joining, you agree to our Terms & Conditions and Privacy Policy
                 </p>
               </form>
-
               <div className="mt-8">
-                <h4 className="text-lg font-bold text-center text-white mb-2">What Our Members Say</h4>
+                <h4 className="text-lg font-bold text-center text-yellow-400 mb-2">What Our Members Say</h4>
                 <p className="text-sm text-gray-300 text-center italic font-semibold">
-                  "Joining the Greek God Squad was the best decision I ever made.I feel stronger, more disciplined, and part of an amazing community!" – Abhiram.
+                  "Joining the Greek God Squad was the best decision I ever made. I feel stronger, more disciplined, and part of an amazing community!" – Abhiram.
                 </p>
               </div>
             </motion.div>
           </section>
 
-          <footer className="text-center py-6 text-gray-400 px-4 text-sm font-bold relative z-10">
+          <footer className="text-center py-6 text-gray-400 px-4 text-sm font-bold relative z-10 mt-8">
             <p>&copy; 2025 The Greek God Squad. All rights reserved.</p>
             <div className="mt-4 flex flex-col sm:flex-row sm:flex-wrap sm:justify-center gap-3">
-              <Link to="/pricingpolicy" className="hover:text-white font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600">Pricing Policy</Link>
-              <Link to="/shipping" className="hover:text-white font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600">Shipping Policy</Link>
-              <Link to="/termsandconditions" className="hover:text-white font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600">Terms & Conditions</Link>
-              <Link to="/privacypolicy" className="hover:text-white font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600">Privacy Policy</Link>
-              <Link to="/refund" className="hover:text-white font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600">Cancellation/Refund</Link>
-              <Link to="/contactus" className="hover:text-white font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600">Contact Us</Link>
+              <Link to="/pricingpolicy" className="hover:text-white font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400">Pricing Policy</Link>
+              <Link to="/shipping" className="hover:text-white font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400">Shipping Policy</Link>
+              <Link to="/termsandconditions" className="hover:text-white font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400">Terms & Conditions</Link>
+              <Link to="/privacypolicy" className="hover:text-white font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400">Privacy Policy</Link>
+              <Link to="/refund" className="hover:text-white font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400">Cancellation/Refund</Link>
+              <Link to="/contactus" className="hover:text-white font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400">Contact Us</Link>
             </div>
           </footer>
         </main>
