@@ -141,11 +141,12 @@ const WhyJoinSection = React.memo(() => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.4 }}
-    className="bg-gray-800 bg-opacity-80 border border-gray-700 p-6 rounded-xl shadow-md hover:shadow-lg transition backdrop-blur-sm"
+    viewport={{ once: true, amount: 0.5 }}
+    transition={{ duration: 0.5 }}
+    className="bg-gray-800/50 border border-white/10 p-6 rounded-2xl shadow-lg hover:shadow-red-500/10 transition-shadow backdrop-blur-md"
   >
-    <h2 className="text-2xl font-bold mb-4">Why Join Us?</h2>
-    <ul className="list-disc list-inside space-y-2 text-gray-300 font-bold">
+    <h2 className="text-2xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-orange-400">Why Join Us?</h2>
+    <ul className="list-disc list-inside space-y-3 text-gray-300 font-medium">
       <li>Customized training programs tailored to your body</li>
       <li>Expert diet plans crafted by our coaches</li>
       <li>Regular progress tracking & feedback</li>
@@ -248,7 +249,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen font-sans bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800 text-white">
+    <div className="min-h-screen font-sans bg-gray-900 text-white selection:bg-red-500/30">
       <Helmet>
         <title>The Greek God Squad - Transform Your Body, Transform Your Life</title>
         <meta name="description" content="Join 1000+ successful members who transformed their lives with The Greek God Squad. Expert coaching, personalized plans, and proven results." />
@@ -261,13 +262,19 @@ export default function Home() {
       </Helmet>
 
       <ErrorBoundary FallbackComponent={ErrorFallback}>
+        {/* Animated Gradient Background */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+           <div className="absolute -top-40 -left-40 w-96 h-96 bg-red-500 rounded-full filter blur-3xl opacity-20 animate-blob"></div>
+           <div className="absolute -top-40 -right-40 w-96 h-96 bg-orange-500 rounded-full filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+           <div className="absolute -bottom-40 left-20 w-96 h-96 bg-yellow-500 rounded-full filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+        </div>
+        
         <div
-          className="absolute inset-0 z-0 bg-center bg-cover bg-no-repeat bg-fixed md:bg-fixed"
+          className="absolute inset-0 z-0 bg-center bg-cover bg-no-repeat bg-fixed"
           style={{
             backgroundImage: "url('./bg-pic.webp')",
             backgroundPosition: 'center 35%',
-            opacity: 0.25,
-            filter: 'blur(2px)',
+            opacity: 0.1,
           }}
           aria-hidden="true"
         />
@@ -275,26 +282,26 @@ export default function Home() {
           <AnimatePresence>{loading && <DumbbellLoader show={loading} />}</AnimatePresence>
 
           {/* Navbar */}
-          <nav className="py-4 px-4 sm:px-8 bg-black/80 backdrop-blur-md text-yellow-400 shadow-lg flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sticky top-0 z-20 rounded-b-2xl">
-            <h1 className="text-3xl font-extrabold tracking-widest uppercase text-center sm:text-left font-display text-yellow-300 drop-shadow-lg">
+          <nav className="py-4 px-4 sm:px-8 bg-black/50 backdrop-blur-md text-yellow-400 shadow-lg flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sticky top-0 z-20 border-b border-white/10">
+            <h1 className="text-3xl font-black tracking-widest uppercase text-center sm:text-left text-white drop-shadow-lg">
               The Greek God Squad
             </h1>
             <div className="flex items-center justify-center sm:justify-end gap-3 flex-wrap">
               <button
                 onClick={() => handleClick('/achievements')}
-                className="rounded-full px-4 py-2 bg-yellow-400 text-black font-bold shadow hover:bg-yellow-300 focus-visible:outline-2 focus-visible:outline-yellow-400 transition-all"
+                className="rounded-full px-5 py-2 bg-white/10 border border-white/20 text-white font-bold shadow-sm hover:bg-white/20 transition-all duration-300 transform hover:scale-105"
               >
                 Achievements
               </button>
               <button
                 onClick={() => handleClick('/clients')}
-                className="rounded-full px-4 py-2 bg-yellow-400 text-black font-bold shadow hover:bg-yellow-300 focus-visible:outline-2 focus-visible:outline-yellow-400 transition-all"
+                className="rounded-full px-5 py-2 bg-white/10 border border-white/20 text-white font-bold shadow-sm hover:bg-white/20 transition-all duration-300 transform hover:scale-105"
               >
                 Transformations
               </button>
               <button
                 onClick={() => handleClick('/ebooks')}
-                className="rounded-full px-4 py-2 bg-yellow-400 text-black font-bold shadow hover:bg-yellow-300 focus-visible:outline-2 focus-visible:outline-yellow-400 transition-all"
+                className="rounded-full px-5 py-2 bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold shadow-lg hover:shadow-red-500/40 transition-all duration-300 transform hover:scale-105"
               >
                 Explore Ebooks
               </button>
@@ -318,84 +325,123 @@ export default function Home() {
           </nav>
 
           {/* Hero Section with CTA */}
-          <section className="flex flex-col items-center justify-center py-14 sm:py-20 px-2">
-            <Suspense fallback={<div className="h-16" />}> <HeroTitle /> </Suspense>
-            <Suspense fallback={<div className="h-8" />}> <HeroSubtitle /> </Suspense>
-            <motion.button
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              onClick={() => document.getElementById('join-form')?.scrollIntoView({ behavior: 'smooth' })}
-              className="mt-4 bg-yellow-400 text-black px-8 py-3 rounded-full font-bold text-lg shadow-lg hover:bg-yellow-300 focus-visible:outline-2 focus-visible:outline-yellow-400 transition-all"
-            >
-              Start Your Transformation
-            </motion.button>
-            <motion.button
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.6 }}
-              onClick={() => handleClick('/ebooks')}
-              className="mt-6 inline-flex items-center justify-center gap-2 bg-yellow-400 border border-gray-300 text-black px-6 py-3 rounded-full font-bold text-lg hover:bg-yellow-400 hover:border-gray-500 transition-all duration-300 shadow-md hover:shadow-xl"
-            >
-              Explore Our Premium Ebooks
-            </motion.button>
+          <section className="flex flex-col items-center justify-center py-20 sm:py-28 px-4 text-center">
+            <motion.h1 
+               initial={{ opacity: 0, y: -20 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ duration: 0.8, ease: "easeOut" }}
+               className="text-4xl sm:text-5xl md:text-6xl font-black text-white px-2 drop-shadow-lg mb-4"
+             >
+               <span className="bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-orange-400 to-yellow-300">
+                 Transform
+               </span> Your Body,
+               <br/>
+               Unleash Your Power
+             </motion.h1>
+            <motion.p 
+               initial={{ opacity: 0 }}
+               animate={{ opacity: 1 }}
+               transition={{ delay: 0.3, duration: 0.8 }}
+               className="text-lg text-gray-300 mb-8 max-w-2xl"
+             >
+               Join 1000+ members who forged their legends. Your journey to god-like strength starts now.
+             </motion.p>
+             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+                <motion.button
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.5, type: 'spring', stiffness: 150 }}
+                  onClick={() => document.getElementById('join-form')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="w-full sm:w-auto bg-gradient-to-r from-red-500 to-orange-500 text-white px-8 py-3 rounded-full font-bold text-lg shadow-lg hover:shadow-red-500/40 focus-visible:outline-2 focus-visible:outline-yellow-400 transition-all duration-300 transform hover:scale-105"
+                >
+                  Start Your Transformation
+                </motion.button>
+                <motion.button
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.6, type: 'spring', stiffness: 150 }}
+                  onClick={() => handleClick('/ebooks')}
+                  className="w-full sm:w-auto bg-gradient-to-r from-red-500 to-orange-500 text-white px-8 py-3 rounded-full font-bold text-lg shadow-lg hover:shadow-red-500/40 focus-visible:outline-2 focus-visible:outline-yellow-400 transition-all duration-300 transform hover:scale-105"
+                >
+                  Explore Our Ebooks
+                </motion.button>
+              </div>
           </section>
 
           {/* Success Metrics */}
-          <section className="py-10 bg-black/60 backdrop-blur rounded-2xl mx-2 my-6">
-            <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 px-4">
+          <section className="py-12 bg-black/40 backdrop-blur-sm">
+            <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 px-4 text-center">
               {SUCCESS_METRICS.map((metric, index) => (
                 <motion.div
                   key={metric.label}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="text-center"
+                  viewport={{ once: true, amount: 0.5 }}
+                  transition={{ delay: index * 0.1, duration: 0.5 }}
+                  className="flex flex-col items-center justify-center"
                 >
-                  <div className="text-3xl md:text-4xl font-extrabold text-yellow-400 mb-2 drop-shadow-lg">{metric.number}</div>
-                  <div className="text-base text-gray-200 font-semibold">{metric.label}</div>
+                  <div className="text-4xl md:text-5xl font-extrabold text-white mb-2 drop-shadow-lg">{metric.number}</div>
+                  <div className="text-base text-gray-400 font-semibold">{metric.label}</div>
                 </motion.div>
               ))}
             </div>
           </section>
 
           {/* Main Grid */}
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-10 pb-20 max-w-6xl mx-auto">
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-10 py-20 max-w-6xl mx-auto px-4">
             {/* Left Section */}
             <Suspense fallback={<DumbbellLoader show={true} />}> <LazyLoadingContent>
               <div className="space-y-10">
-                <Suspense fallback={<div className="h-48" />}> <AboutSection /> </Suspense>
+                <motion.div
+                   initial={{ opacity: 0, y: 20 }}
+                   whileInView={{ opacity: 1, y: 0 }}
+                   viewport={{ once: true, amount: 0.5 }}
+                   transition={{ duration: 0.5 }}
+                   className="bg-gray-800/50 border border-white/10 p-6 rounded-2xl shadow-lg hover:shadow-red-500/10 transition-shadow backdrop-blur-md"
+                 >
+                   <h2 className="text-2xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-orange-400">About Us</h2>
+                   <p className="text-gray-300 text-base font-medium">
+                     The Greek God Squad is more than a fitness program — it's a transformation
+                     movement. We're focused on building stronger bodies and sharper minds through
+                     customized training, nutrition, and community-driven motivation.
+                   </p>
+                   <div className="mt-4 flex items-center space-x-1 text-yellow-400">
+                     {[...Array(5)].map((_, i) => <span key={i}>★</span>)}
+                     <span className="text-gray-400 text-sm ml-2">(4.9/5 from 1000+ reviews)</span>
+                   </div>
+                 </motion.div>
                 <Suspense fallback={<div className="h-48" />}> <WhyJoinSection /> </Suspense>
                 {/* Coaches */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                  className="bg-gray-900 bg-opacity-90 p-6 rounded-2xl shadow-lg hover:shadow-2xl transition backdrop-blur-md"
+                  viewport={{ once: true, amount: 0.5 }}
+                  transition={{ duration: 0.5 }}
+                  className="bg-gray-800/50 border border-white/10 p-6 rounded-2xl shadow-lg hover:shadow-red-500/10 transition-shadow backdrop-blur-md"
                 >
-                  <h2 className="text-2xl font-extrabold mb-6 text-yellow-400">Meet Our Coaches</h2>
+                  <h2 className="text-2xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-orange-400">Meet Our Coaches</h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {COACHES.map((coach, idx) => (
                       <motion.div
                         key={coach.name}
-                        className="flex flex-col items-center text-center bg-gray-800 bg-opacity-90 rounded-2xl p-6 border border-gray-700 shadow hover:shadow-xl transition backdrop-blur-md"
+                        className="flex flex-col items-center text-center bg-gray-800/80 rounded-2xl p-6 border border-gray-700/50 shadow-md hover:shadow-xl hover:border-red-500/30 transition-all duration-300 transform hover:-translate-y-1"
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5, delay: idx * 0.2 }}
+                        transition={{ duration: 0.5, delay: idx * 0.1 }}
                       >
                         <OptimizedImage
                           src={coach.image}
                           alt={`Coach ${coach.name}`}
-                          className="w-24 h-24 rounded-full object-cover mb-4 border-4 border-yellow-400 shadow-lg"
+                          className="w-24 h-24 rounded-full object-cover mb-4 border-4 border-white/10 shadow-lg"
                         />
                         <h4 className="text-lg font-bold text-white mb-1">{coach.name}</h4>
-                        <p className="text-sm text-yellow-300 font-semibold mb-1">{coach.title}</p>
-                        <p className="mt-2 text-gray-200 text-sm font-semibold">{coach.description}</p>
+                        <p className="text-sm text-red-400 font-semibold mb-2">{coach.title}</p>
+                        <p className="mt-2 text-gray-300 text-sm font-medium">{coach.description}</p>
                         <a
                           href={coach.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="mt-3 text-blue-400 hover:underline text-sm font-bold"
+                          className="mt-4 text-blue-400 hover:underline text-sm font-bold"
                         >
                           {coach.handle}
                         </a>
@@ -407,27 +453,29 @@ export default function Home() {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                  className="bg-gray-900 bg-opacity-90 p-6 rounded-2xl shadow-lg hover:shadow-2xl transition backdrop-blur-md"
+                  viewport={{ once: true, amount: 0.5 }}
+                  transition={{ duration: 0.5 }}
+                  className="bg-gray-800/50 border border-white/10 p-6 rounded-2xl shadow-lg hover:shadow-red-500/10 transition-shadow backdrop-blur-md"
                 >
-                  <h2 className="text-2xl font-extrabold mb-6 text-yellow-400">Success Stories</h2>
+                  <h2 className="text-2xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-orange-400">Success Stories</h2>
                   <div className="space-y-6">
                     {TESTIMONIALS.map((testimonial, index) => (
                       <motion.div
                         key={testimonial.name}
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.2 }}
-                        className="bg-gray-800 bg-opacity-90 p-4 rounded-xl shadow hover:shadow-xl"
+                        viewport={{ once: true, amount: 0.5 }}
+                        transition={{ delay: index * 0.1, duration: 0.5 }}
+                        className="bg-gray-900/70 p-4 rounded-xl shadow-inner border border-gray-700/50"
                       >
-                        <div className="mb-3">
+                        <div className="mb-2">
                           <h4 className="font-bold text-white text-lg">{testimonial.name}</h4>
-                          <p className="text-yellow-400 text-sm font-semibold">{testimonial.transformation}</p>
+                          <p className="text-red-400 text-sm font-semibold">{testimonial.transformation}</p>
                         </div>
-                        <p className="text-gray-200 text-base mb-2">{testimonial.text}</p>
-                        <div className="flex">
+                        <p className="text-gray-300 text-base mb-2 italic">"{testimonial.text}"</p>
+                        <div className="flex text-yellow-400 text-lg">
                           {[...Array(testimonial.rating)].map((_, i) => (
-                            <span key={i} className="text-yellow-400 text-lg">★</span>
+                            <span key={i}>★</span>
                           ))}
                         </div>
                       </motion.div>
@@ -441,64 +489,67 @@ export default function Home() {
               id="join-form"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.6 }}
-              className="w-full md:max-w-md mx-auto bg-gray-900 bg-opacity-90 border border-gray-700 p-8 rounded-2xl shadow-lg self-start hover:shadow-2xl transition backdrop-blur-md"
+              className="w-full md:max-w-md mx-auto bg-gray-800/50 border border-white/10 p-8 rounded-2xl shadow-lg self-start backdrop-blur-md"
             >
-              <h3 className="text-2xl font-extrabold mb-2 text-center text-yellow-400">Join the Squad</h3>
-              <p className="text-center text-gray-200 text-base mb-6">
-                Start your transformation journey today. Limited spots available!
+              <h3 className="text-3xl font-black mb-2 text-center text-white">
+               <span className="bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-orange-400">Join the Squad</span>
+               </h3>
+              <p className="text-center text-gray-300 text-base mb-8">
+                Limited spots available. Start your transformation now!
               </p>
               <form className="space-y-5" onSubmit={handleFormSubmit} autoComplete="on">
                 <input
                   name="name"
                   type="text"
                   required
-                  placeholder="Name"
+                  placeholder="Your Full Name"
                   pattern="[A-Za-z ]+"
                   title="Name should contain only letters and spaces."
-                  className="w-full bg-gray-100 border border-gray-300 rounded-full p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400"
+                  className="w-full bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-base font-medium text-white focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
                   autoComplete="name"
                 />
                 <input
                   name="dob"
                   type="text"
                   required
-                  placeholder="DD-MM-YYYY"
+                  placeholder="Date of Birth (DD-MM-YYYY)"
                   value={dob}
                   onChange={handleDobChange}
                   maxLength={10}
-                  className="w-full bg-gray-100 border border-gray-300 rounded-full p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400"
+                  className="w-full bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-base font-medium text-white focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
                   autoComplete="bday"
                 />
                 <input
                   name="age"
                   type="text"
-                  value={age || ''}
+                  value={age !== null ? age : ''}
                   readOnly
-                  placeholder="Age"
-                  className="w-full bg-gray-100 border border-gray-300 rounded-full p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400"
+                  placeholder="Age (auto-calculated)"
+                  className="w-full bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-base font-medium text-white focus:ring-2 focus:ring-red-500 focus:border-red-500 transition cursor-not-allowed"
                   tabIndex={-1}
                 />
                 <input
                   name="phone"
                   type="tel"
                   required
-                  placeholder="Phone Number"
+                  placeholder="10-Digit Phone Number"
                   value={phone}
                   onChange={handlePhoneChange}
                   maxLength={10}
                   minLength={10}
                   pattern="[0-9]{10}"
                   title="Please enter exactly 10 digits"
-                  className="w-full bg-gray-100 border border-gray-300 rounded-full p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400"
+                  className="w-full bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-base font-medium text-white focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
                   autoComplete="tel"
                 />
                 <input
                   name="email"
                   type="email"
                   required
-                  placeholder="Email"
-                  className="w-full bg-gray-100 border border-gray-300 rounded-full p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400"
+                  placeholder="Your Email Address"
+                  className="w-full bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-base font-medium text-white focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
                   autoComplete="email"
                 />
                 <input
@@ -506,7 +557,7 @@ export default function Home() {
                   type="number"
                   required
                   placeholder="Height (in cm)"
-                  className="w-full bg-gray-100 border border-gray-300 rounded-full p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400"
+                  className="w-full bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-base font-medium text-white focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
                   autoComplete="off"
                 />
                 <input
@@ -514,41 +565,35 @@ export default function Home() {
                   type="number"
                   required
                   placeholder="Weight (in kg)"
-                  className="w-full bg-gray-100 border border-gray-300 rounded-full p-3 text-base font-bold text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400"
+                  className="w-full bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-base font-medium text-white focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
                   autoComplete="off"
                 />
                 <button
                   type="submit"
-                  className="w-full bg-yellow-400 text-black py-3 rounded-full hover:bg-yellow-300 transition font-bold text-base focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400 disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full bg-gradient-to-r from-red-500 to-orange-500 text-white py-3 rounded-lg hover:shadow-lg hover:shadow-red-500/40 transition font-bold text-lg transform hover:scale-105 disabled:opacity-60 disabled:cursor-not-allowed"
                   disabled={loading}
                 >
-                  {loading ? 'Processing...' : 'Start Your Journey'}
+                  {loading ? 'Processing...' : 'Secure Your Spot'}
                 </button>
-                <p className="text-center text-sm text-gray-400">
-                  By joining, you agree to our Terms & Conditions and Privacy Policy
+                <p className="text-center text-xs text-gray-500 pt-2">
+                  By joining, you agree to our Terms & Conditions and Privacy Policy.
                 </p>
               </form>
-              <div className="mt-8">
-                <h4 className="text-lg font-bold text-center text-yellow-400 mb-2">What Our Members Say</h4>
-                <p className="text-sm text-gray-300 text-center italic font-semibold">
-                  "Joining the Greek God Squad was the best decision I ever made. I feel stronger, more disciplined, and part of an amazing community!" – Abhiram.
-                </p>
-              </div>
             </motion.div>
           </section>
 
-          <footer className="text-center py-6 text-gray-400 px-4 text-sm font-bold relative z-10 mt-8">
-            <p>&copy; 2025 The Greek God Squad. All rights reserved.</p>
-            <div className="mt-4 flex flex-col sm:flex-row sm:flex-wrap sm:justify-center gap-3">
-              <Link to="/pricingpolicy" className="hover:text-white font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400">Pricing Policy</Link>
-              <Link to="/shipping" className="hover:text-white font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400">Shipping Policy</Link>
-              <Link to="/termsandconditions" className="hover:text-white font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400">Terms & Conditions</Link>
-              <Link to="/privacypolicy" className="hover:text-white font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400">Privacy Policy</Link>
-              <Link to="/refund" className="hover:text-white font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400">Cancellation/Refund</Link>
-              <Link to="/contactus" className="hover:text-white font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-400">Contact Us</Link>
+          <footer className="text-center py-8 text-gray-400 px-4 text-sm font-medium relative z-10 border-t border-white/10 mt-8">
+            <p>&copy; {new Date().getFullYear()} The Greek God Squad. All rights reserved.</p>
+            <div className="mt-4 flex flex-wrap justify-center gap-x-6 gap-y-2">
+              <Link to="/pricingpolicy" className="hover:text-white transition-colors">Pricing Policy</Link>
+              <Link to="/shipping" className="hover:text-white transition-colors">Shipping Policy</Link>
+              <Link to="/termsandconditions" className="hover:text-white transition-colors">Terms & Conditions</Link>
+              <Link to="/privacypolicy" className="hover:text-white transition-colors">Privacy Policy</Link>
+              <Link to="/refund" className="hover:text-white transition-colors">Cancellation/Refund</Link>
+              <Link to="/contactus" className="hover:text-white transition-colors">Contact Us</Link>
             </div>
           </footer>
-        </main>
+       </main>
       </ErrorBoundary>
     </div>
   );

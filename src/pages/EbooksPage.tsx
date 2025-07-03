@@ -12,19 +12,48 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "") || ""
 
 const EbooksPage = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [loadingEbook, setLoadingEbook] = useState<string | null>(null);
   const [errorCount, setErrorCount] = useState(0);
   const [showQRModal, setShowQRModal] = useState(false);
   const [qrRevealed, setQrRevealed] = useState(false);
 
-  const handlePayment = async () => {
-    setLoading(true);
+  const ebooks = [
+    {
+      id: 'shred-like-a-god',
+      title: 'Shred Like a Greek God',
+      image: './ebook.webp',
+      subtitle: 'A complete four-week guide for peak development and definition.',
+      price: 79,
+      originalPrice: 299,
+      rating: 4.8,
+      reviews: '1200+',
+      offer: 'Classic',
+      amountInPaise: 7900,
+      description: 'Shred Like a Greek God - EBook',
+      ebookKey: 'ebook1-training.pdf',
+    },
+    {
+      id: 'chest-workout',
+      title: 'Greek God Back Workout',
+      image: './ebook2.webp',
+      subtitle: 'The ultimate 4-week program for building a powerful, chiseled back.',
+      price: 79,
+      originalPrice: 499,
+      offer: 'Limited Offer',
+      amountInPaise: 7900,
+      description: 'Greek God Back Workout - EBook',
+      ebookKey: 'ebook2-training.pdf',
+    }
+  ];
+
+  const handlePayment = async (ebook: (typeof ebooks)[0] & { ebookKey?: string }) => {
+    setLoadingEbook(ebook.id);
 
     try {
       const orderResponse = await fetch(`${API_BASE_URL}/api/payment/create-order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: 7900 }),
+        body: JSON.stringify({ amount: ebook.amountInPaise }),
       });
 
       if (!orderResponse.ok) throw new Error("Failed to create order.");
@@ -33,11 +62,11 @@ const EbooksPage = () => {
 
       const options = {
         key: razorpayKey,
-        amount: 7900,
+        amount: ebook.amountInPaise,
         currency: "INR",
         name: "Greek God Squad",
-        description: "Shred Like a Greek God - EBook",
-        image: "./ebook.webp",
+        description: ebook.description,
+        image: ebook.image,
         order_id: orderId,
         handler: async (response: any) => {
           try {
@@ -50,6 +79,7 @@ const EbooksPage = () => {
                   razorpay_payment_id: response.razorpay_payment_id,
                   razorpay_order_id: response.razorpay_order_id,
                   razorpay_signature: response.razorpay_signature,
+                  ebookKey: ebook.ebookKey,
                 }),
               }
             );
@@ -68,14 +98,14 @@ const EbooksPage = () => {
             toast.error("Payment verification failed. Please try again.");
             navigate("/failure");
           } finally {
-            setLoading(false);
+            setLoadingEbook(null);
           }
         },
         theme: { color: "#EF4444" },
         modal: {
           ondismiss: () => {
             toast("Transaction cancelled.", { icon: "⚡" });
-            setLoading(false);
+            setLoadingEbook(null);
           },
         },
       };
@@ -85,6 +115,7 @@ const EbooksPage = () => {
         console.error("Payment Failed:", resp.error);
         toast.error("Payment failed. Please try again.");
         navigate("/failure");
+        setLoadingEbook(null);
       });
 
       razorpay.open();
@@ -93,53 +124,122 @@ const EbooksPage = () => {
       const newCount = errorCount + 1;
       setErrorCount(newCount);
       toast.error("An error occurred. Please try again.");
-      setLoading(false);
+      setLoadingEbook(null);
       if (newCount >= 3) setShowQRModal(true);
     }
   };
 
   return (
-    <div className="min-h-screen bg-black text-white py-8 px-4 sm:px-6 lg:px-8 relative">
-      <button
-        onClick={() => navigate(-1)}
-        className="absolute top-4 left-4 bg-white/10 border border-white/20 text-white py-2 px-4 rounded-lg hover:bg-white/20 transition z-10"
-      >
-        ← Back
-      </button>
+    <div className="min-h-screen bg-gray-900 text-white font-sans overflow-x-hidden antialiased relative">
+      {/* Subtle background grid */}
+      <div className="absolute inset-0 z-0 opacity-10">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
+      </div>
+      
+      <div className="relative z-10">
+        <button
+          onClick={() => navigate(-1)}
+          className="absolute top-6 left-6 bg-white/10 border border-white/20 text-white py-2 px-4 rounded-lg hover:bg-white/20 backdrop-blur-sm transition-all duration-300 text-sm font-medium"
+        >
+          ← Go Back
+        </button>
 
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-8">
-        EBooks Library
-      </h1>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-        <div className="bg-white/10 border border-white/20 rounded-xl p-4 sm:p-6 shadow-lg backdrop-blur-sm transition hover:scale-105 hover:shadow-2xl duration-300">
-          <img
-            src="./ebook.webp"
-            alt="Ebook Cover"
-            className="w-full aspect-[4/5] object-contain rounded-lg mb-4 bg-white"
-          />
-          <h3 className="text-lg sm:text-xl font-semibold mb-2 text-center">
-            Greek God Chest Workout
-          </h3>
-          <p className="text-gray-300 text-sm sm:text-base mb-4 text-center">
-            A complete four-week guide. Progressive overload for peak chest development.
+        <main className="container mx-auto px-4 py-20 sm:py-24 flex flex-col items-center">
+          <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-center mb-2 bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-orange-400 to-yellow-300">
+            FORGE YOUR LEGEND
+          </h1>
+          <p className="text-lg md:text-xl text-gray-300 max-w-2xl text-center mb-12">
+            This isn't just an ebook. It's your blueprint to building a god-like
+            physique that commands respect.
           </p>
-          <button
-            onClick={handlePayment}
-            disabled={loading}
-            className={`${
-              loading ? "bg-gray-400" : "bg-gradient-to-r from-red-500 to-orange-600"
-            } text-white py-2 px-4 rounded-lg shadow-md hover:from-red-400 hover:to-orange-500 transition-all duration-300 transform hover:scale-105 w-full`}
-          >
-            {loading ? "Processing..." : "👑 Buy Now ₹79"}
-          </button>
-        </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+            {ebooks.map(ebook => (
+               <div key={ebook.id} className="bg-gradient-to-br from-gray-800 to-gray-900 border border-white/10 rounded-2xl shadow-2xl p-6 flex flex-col items-center text-center transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(239,68,68,0.2)]">
+                <div className="relative w-full mb-4">
+                  <img
+                    src={ebook.image}
+                    alt={`Ebook Cover - ${ebook.title}`}
+                    className="w-full aspect-[4/5] object-cover rounded-lg shadow-lg"
+                  />
+                  <div className="absolute inset-0 bg-black/10 rounded-lg group-hover:bg-transparent transition-colors"></div>
+                  {ebook.offer && (
+                    <div className={`absolute top-4 -right-4 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider ${ebook.offer === 'Limited Offer' ? 'bg-red-600 animate-pulse' : 'bg-blue-600'}`}>
+                      {ebook.offer}
+                    </div>
+                  )}
+                </div>
+
+                <h3 className="text-2xl font-bold mb-2">
+                  {ebook.title}
+                </h3>
+                <div className="flex items-center justify-center gap-2 text-yellow-400 mb-3 h-6">
+                  {ebook.rating ? (
+                    <>
+                      <span>★★★★</span>
+                      <span className="text-yellow-600">★</span>
+                      <span className="text-white/70 text-sm font-medium">
+                        {ebook.rating} ({ebook.reviews} Sold)
+                      </span>
+                    </>
+                  ) : (
+                    <span className="text-white/90 text-sm font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500">
+                      🔥 New Release!
+                    </span>
+                  )}
+                </div>
+                <p className="text-gray-300 text-sm mb-6 px-4 h-16">
+                  {ebook.subtitle}
+                </p>
+
+                <div className="flex items-center justify-center gap-4 mb-6">
+                  <span className="text-2xl text-gray-400 line-through">
+                    ₹{ebook.originalPrice}
+                  </span>
+                  <span className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-orange-500">
+                    ₹{ebook.price}
+                  </span>
+                </div>
+
+                <button
+                  onClick={() => handlePayment(ebook)}
+                  disabled={loadingEbook !== null}
+                  className={`w-full mt-auto py-3 px-4 rounded-lg font-bold text-lg transition-all duration-300 transform
+                    ${
+                      loadingEbook === ebook.id
+                        ? "bg-gray-500 cursor-wait"
+                        : loadingEbook !== null && loadingEbook !== ebook.id
+                        ? "bg-gray-700 cursor-not-allowed"
+                        : "bg-gradient-to-r from-red-500 to-orange-600 hover:from-red-400 hover:to-orange-500 hover:scale-105 shadow-[0_0_20px_rgba(239,68,68,0.5)]"
+                    }`}
+                >
+                  {loadingEbook === ebook.id ? "Processing..." : "GET INSTANT ACCESS"}
+                </button>
+              </div>
+            ))}
+          </div>
+          
+          <div className="mt-24 w-full max-w-4xl">
+            <h2 className="text-3xl font-bold text-center mb-10">Praised By Warriors</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-white/5 border border-white/10 rounded-xl p-6 backdrop-blur-sm">
+                <p className="text-gray-300 mb-4">"I've seen more chest gains in 4 weeks than I did in the last 6 months. This guide is pure gold."</p>
+                <p className="font-semibold text-right">- Arjun P.</p>
+              </div>
+              <div className="bg-white/5 border border-white/10 rounded-xl p-6 backdrop-blur-sm">
+                <p className="text-gray-300 mb-4">"The workouts are brutal but effective. The pump is insane. 10/10 would recommend."</p>
+                <p className="font-semibold text-right">- Vikram S.</p>
+              </div>
+            </div>
+          </div>
+
+        </main>
       </div>
 
       {showQRModal && (
         <div className="fixed inset-0 flex items-center justify-center p-4 z-50">
           <div className="absolute inset-0 bg-black bg-opacity-70 backdrop-blur-md" />
-          <div className="relative z-10 bg-black text-white rounded-2xl p-6 w-full max-w-sm mx-auto flex flex-col items-center">
+          <div className="relative z-10 bg-gray-900 border border-white/20 text-white rounded-2xl p-6 w-full max-w-sm mx-auto flex flex-col items-center shadow-2xl">
             <div
               className="relative w-full cursor-pointer"
               onClick={() => setQrRevealed(true)}
@@ -154,28 +254,29 @@ const EbooksPage = () => {
               {!qrRevealed && (
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span className="bg-white bg-opacity-80 text-black px-4 py-2 rounded-lg font-medium text-lg">
-                    Generate QR
+                    Tap to Reveal QR
                   </span>
                 </div>
               )}
             </div>
-            <h3 className="text-lg font-bold mb-2 text-center mt-4">
+            <h3 className="text-xl font-bold mb-2 text-center mt-4">
               Alternate Payment
             </h3>
             <p className="text-sm text-gray-300 text-center mb-4 px-2">
-              Send Payment → Take Screenshot → Send to <b>+91 91604 27763</b>
+              Scan & Pay → Take Screenshot → Send to{" "}
+              <b className="text-white font-semibold">+91 91604 27763</b>
             </p>
             <a
               href="https://wa.me/919160427763"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg mb-2 w-full text-center hover:bg-green-600 transition"
+              className="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg mb-2 w-full text-center hover:bg-green-600 transition-transform transform hover:scale-105"
             >
-              WhatsApp Now
+              Contact on WhatsApp
             </a>
             <button
               onClick={() => setShowQRModal(false)}
-              className="mt-2 py-2 w-full bg-blue-600 text-white rounded-lg font-medium shadow hover:bg-blue-700 transition"
+              className="mt-2 py-2 w-full bg-blue-600 text-white rounded-lg font-medium shadow hover:bg-blue-700 transition-transform transform hover:scale-105"
             >
               Close
             </button>
