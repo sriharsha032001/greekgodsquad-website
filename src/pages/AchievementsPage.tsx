@@ -12,25 +12,25 @@ const Achievements = () => {
       title: "ICN Pro Card Winner",
       description:
         "The ICN Pro Card is one of the most coveted titles in the world of bodybuilding. Achieving this honor is a significant milestone in any athlete's career, and it showcases not only an impressive physique but also dedication, discipline, and consistency in training. Winning the ICN Pro Card means earning recognition at an elite level of competition, competing against the best in the sport. This achievement is a symbol of excellence, perseverance, and a commitment to pushing limits.",
-      imageUrl: "./pro-card.JPG", // relative path
+      imageUrl: "./pro-card.webp", // relative path
     },
     {
       title: "Muscle Mania Champion of champion",
       description:
         "Muscle Mania is one of the most prestigious fitness competitions worldwide, attracting top-tier athletes and bodybuilders from across the globe. As a finalist, this achievement highlights exceptional muscle definition, aesthetic proportions, and stage presentation. The competition requires not just physical conditioning, but also the ability to present oneself under the spotlight, engaging with the audience and judges. Being named a finalist in Muscle Mania represents months of grueling preparation, smart training strategies, and impeccable stage presence.",
-      imageUrl: "./muscle-mania.jpeg", // relative path
+      imageUrl: "./muscle-mania.webp", // relative path
     },
     {
       title: "Hammer Champion",
       description:
         "The Hammer event is a rigorous strength and physique competition that tests both muscle size and strength. Winning the Hammer is no small feat, as it requires incredible physical power, endurance, and mental fortitude. The title represents not just brute force, but also the ability to push past limits and stay resilient under pressure. The competition is about more than just building size—it’s about perfecting strength while maintaining balance, and the Hammer Champion title signifies the culmination of years of dedication to both strength and hypertrophy training.",
-      imageUrl: "./hammer.JPG", // relative path
+      imageUrl: "./hammer.webp", // relative path
     },
     {
       title: "All Trophies",
       description:
         "40+ Local Trophies: In addition to these major accomplishments, the athlete has collected over 40 local trophies, recognizing their dominance in regional and national competitions. These trophies represent years of consistent performance, showcasing dedication, hard work, and commitment to excellence. Each local victory serves as a stepping stone, contributing to the athlete’s overall journey in the world of bodybuilding. These trophies acknowledge the athlete’s status as a champion at the grassroots level and highlight their rise through various competitive tiers before reaching global prominence.",
-      imageUrl: "./welcome-bg.JPG", // relative path
+      imageUrl: "./welcome-bg.webp", // relative path
     },
   ];
 
