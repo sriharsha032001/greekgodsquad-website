@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ErrorBoundary } from 'react-error-boundary';
-import DumbbellLoader from '../components/DumbbellLoader';
+import ZeusLoader from '../components/ZeusLoader';
 import LazyLoadingContent from '../components/LazyLoadContent';
 
 // Lazy load components
@@ -279,7 +279,7 @@ export default function Home() {
           aria-hidden="true"
         />
         <main className="relative z-10">
-          <AnimatePresence>{loading && <DumbbellLoader show={loading} />}</AnimatePresence>
+          <AnimatePresence>{loading && <ZeusLoader show={loading} />}</AnimatePresence>
 
           {/* Navbar */}
           <nav className="py-4 px-4 sm:px-8 bg-black/50 backdrop-blur-md text-yellow-400 shadow-lg flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sticky top-0 z-20 border-b border-white/10">
@@ -390,7 +390,7 @@ export default function Home() {
           {/* Main Grid */}
           <section className="grid grid-cols-1 md:grid-cols-2 gap-10 py-20 max-w-6xl mx-auto px-4">
             {/* Left Section */}
-            <Suspense fallback={<DumbbellLoader show={true} />}> <LazyLoadingContent>
+            <Suspense fallback={<ZeusLoader show={true} />}> <LazyLoadingContent>
               <div className="space-y-10">
                 <motion.div
                    initial={{ opacity: 0, y: 20 }}
